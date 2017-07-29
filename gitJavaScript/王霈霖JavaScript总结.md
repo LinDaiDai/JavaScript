@@ -1152,7 +1152,7 @@ alert(box3);
 
 arrayObject.slice(start,end);
 
-![533299680001637b05160145](E:\每日笔记\gitJavaScript\533299680001637b05160145.jpg)
+![533299680001637b05160145.jpg](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/533299680001637b05160145.jpg?raw=true)
 
 **var box1 = [1,2,3,4,5];
 
@@ -1277,7 +1277,7 @@ alert(array);
 
 语法:提取开始的位置(下标), 提取字符的长度;
 
-![2345_image_file_copy_1](E:\每日笔记\gitJavaScript\2345_image_file_copy_1.jpg)
+![2345_image_file_copy_1.jpg](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/2345_image_file_copy_1.jpg?raw=true)
 
 注意：**如果参数startPos是负数，从字符串的尾部开始算起的位置。也就是说，-1 指字符串中最后一个字符，-2 指倒数第二个字符，以此类推。
 
@@ -1299,7 +1299,7 @@ alert(array);                   //提取完之后对原数组没有影响;
 
 语法:提取开始的位置(数组的下标),到结束的位置(数组的下标)的字符;
 
-![2345_image_file_copy_2](E:\每日笔记\gitJavaScript\2345_image_file_copy_2.jpg)
+![2345_image_file_copy_2.jpg](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/2345_image_file_copy_2.jpg?raw=true)
 
 注意：
 
@@ -1329,11 +1329,11 @@ alert(array);                   //提取完之后对原数组没有影响;
 
 **window对象是BOM的核心;指当前浏览器的窗口;**
 
-![Image(12)](E:\每日笔记\gitJavaScript\Image(12).png)
+![Image(12).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(12).png?raw=true)
 
 *1.window对象的方法:**
 
-![Image(13)](E:\每日笔记\gitJavaScript\Image(13).png)
+![Image(13).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(13).png?raw=true)
 
 1.alert();()里可以放字符串,数字等等;
 2.prompt(xx,默认值);
@@ -1347,7 +1347,7 @@ var isOk = confirm('您确定要退出吗?');alert(isOk);=>true/flase;
 **调整窗口大小****     (Chrome和FF以禁用)**     window.resizeTo(w,h);     调整到指定的大小;     window.resizeBy(w+,h+);   增加指定的窗口宽高;  
 **3.打开窗口    **  
 ​     open(URL,name,features)方法用于打开一个新的浏览器窗口或者查找一个已命名的窗口
-​     ![Image(14)](E:\每日笔记\gitJavaScript\Image(14).png)
+​     ![Image(14).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(14).png?raw=true)
 
 例:     打开育知同创的官网,以新的窗口显示,窗口大小400px,400px.   
 
@@ -1369,10 +1369,10 @@ window.history.[属性|方法]
 **(注:window可以省略);**
 history 对象属性:length         返回浏览器历史记录列表中的URL数量;
 
-![Image(1)](E:\每日笔记\gitJavaScript\Image(1).png)
+![Image(1).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(1).png?raw=true)
 history 对象方法:
 
-![Image](E:\每日笔记\gitJavaScript\Image.png)
+![Image.png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image.png?raw=true)
 
 **back()方法** ,加载history列表中的前一个URL;
 语法:window.history.back();等价于: window.history.go(-1);
@@ -1382,7 +1382,7 @@ history 对象方法:
 语法:window.history.go(number);
 参数:
 
-![Image(2)](E:\每日笔记\gitJavaScript\Image(2).png)
+![Image(2).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(2).png?raw=true)
 
 浏览器中，返回当前页面之前浏览过的第二个历史页面，**代码如下：**`window.history.go(-2);
 `**注意：和在浏览器中单击两次后退按钮操作一样。**
@@ -1393,7 +1393,7 @@ history 对象方法:
 语法:location.[属性|方法];
 location 对象属性图示:
 
-![Image(3)](E:\每日笔记\gitJavaScript\Image(3).png)
+![Image(3).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(3).png?raw=true)
 
 
 
@@ -1401,21 +1401,21 @@ location 对象属性:
 
 
 
-![Image(4)](E:\每日笔记\gitJavaScript\Image(4).png)
+![Image(4).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(4).png?raw=true)
 
 location对象的方法:
 
-![Image(5)](E:\每日笔记\gitJavaScript\Image(5).png)
+![Image(5).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(5).png?raw=true)
 
 例:获取当前页面完整的href :
 var a = window.location.href;alert(a); 
 
-![Image(6)](E:\每日笔记\gitJavaScript\Image(6).png)
+![Image(6).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(6).png?raw=true)
 
 例2:var msg = "协议:" + location.protocol+ "<br> 主机:" + location.host;p.innerHTML = msg;=>协议: http:  主机: localhost:63342 **6.navigato 对象**Navigator 对象包含有关浏览器的信息，通常用于检测浏览器与操作系统的版本。
 对象属性:
 
-![Image(7)](E:\每日笔记\gitJavaScript\Image(7).png)
+![Image(7).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(7).png?raw=true)
 
 查看浏览器的名称和版本，**代码如下:**<script type="text/javascript">
 
@@ -1434,7 +1434,7 @@ var a = window.location.href;alert(a);
 **语法**`navigator.userAgent
 `几种浏览的user_agent.，像360的兼容模式用的是IE、极速模式用的是chrom的内核。
 
-![Image(8)](E:\每日笔记\gitJavaScript\Image(8).png)
+![Image(8).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(8).png?raw=true)
 使用userAgent判断使用的是什么浏览器(假设使用的是IE8浏览器),**代码如下:**function validB(){ 
 
   var u_agent = navigator.userAgent; 
@@ -1459,14 +1459,13 @@ var a = window.location.href;alert(a);
 
 ​    document.write("u_agent:"+u_agent+"<br>"); 
 } 
-运行结果:
-![Image(9)](E:\每日笔记\gitJavaScript\Image(9).png)
+运行结果:![Image(9).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(9).png?raw=true)
 
 6.screen对象
 screen对象用于获取用户的屏幕信息;
 语法:window.screen.属性;可省略window对象的属性:
 
-![Image(10)](E:\每日笔记\gitJavaScript\Image(10).png)
+![Image(10).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(10).png?raw=true)
 
 例1:获取屏幕宽度高度:**注意:**
 
@@ -1493,7 +1492,7 @@ document.write("可用高度：" + screen.availHeight);
 
 **一.DOM  **  文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。
 
-![Image(15)](E:\每日笔记\gitJavaScript\Image(15).png)
+![Image(15).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(15).png?raw=true)
 
 DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。
 **HTML****文档可以说由节点构成的集合，DOM节点有:
@@ -1527,8 +1526,7 @@ html(元素)标签，通过元素节点表示属性，通过属性节点来表�
 
 **2.根据标签名来获取**<body><p></p><div id = "box">     <p>abc</p>     <p>adc</p></div><ul>       <p>bcd</p>     <li class = "list">li 节点1</li>     <li class = "list">li 节点2</li>     <li>li 节点3</li></ul><form action="">     <input type="text" name ="user">     <input type="text" name ="user"><script>     //1.根据id来获取到元素节点     var box = document.getElementById("box");     console.log(box);     => <div id="box"></box>     //2.根据标签名     var lis = document.getElementsByTagName("li");     console.log(lis);     => 长度为3,子级为li 的一个数组     //3.根据类名来获取     var list = document.getElementsByClassName("list");     console.log(list);     => 长度为2, 子级为有list类名的元素 的一个数组     //4.根据 name 属性的值类获取属性     var users = document.getElementsByName("user");     console.log(users);     => 长度为2, 子级为有user的name名的元素 的一个数组     //5.document.querySelector   获取第一个       var p = document.querySelector("#box > p"); //box 这个 id 下的 p标签       console.log(p);     =><p>abc</p>        //6.document.querySelectorAll  获取满足选择器里的所有标签         var ps = document.querySelectorAll("#box > p");         console.log(ps);     =>长度为2的p 的一个数组          <p>abc</p>          <p>adc</p>
 **三.Node关系,获取操作**   
-**1.节点与节点之间的关系**父（parent）节点 父节点拥有任意数量的子节点子（child）节点 子节点拥有一个父节点兄弟（sibling）节点 同级的子节点被称为同胞（兄弟或姐妹）。同胞是拥有相同父节点的节点根 (root) 节点 一个文档只能有一个根节点。对html文档来说，根节点就是documentElement。根节点不可能有父节点
-![Image(16)](E:\每日笔记\gitJavaScript\Image(16).png)
+**1.节点与节点之间的关系**父（parent）节点 父节点拥有任意数量的子节点子（child）节点 子节点拥有一个父节点兄弟（sibling）节点 同级的子节点被称为同胞（兄弟或姐妹）。同胞是拥有相同父节点的节点根 (root) 节点 一个文档只能有一个根节点。对html文档来说，根节点就是documentElement。根节点不可能有父节点![Image(16).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(16).png?raw=true)
 
 var div = document.querySelector("div");var allNodes = div.childNodes;          //childNodes会把所有类型节点都获取到,包裹元素节点,文本节点(空格换行符等),属性节点;
 但主要是为了获取元素节点(nodeType为1)      方法1:          for( var c in allNode){               if( c.nodeType ==1){                    document.write(c)                    }               }      方法2:          var allNodes = div.children;          //div的所有子节点(只有元素节点,不包裹文本等其他节点)          var count = div.childElementCount;     //div的所有子节点的个数 ,也可以之间用 allNodes.length;          var firstChild = div.firstElementChild;     //div的第一个元素节点          var lastChild = div.lastElementChild;          //div的最后一个元素节点          var secondChild = div.firstElementChild.nextElementSibling;     //div的第二个元素节点          var lastSecondChild = div.lastElementChild.previousElementSibling;     //div的倒数第二个元素节点          div == div.firstElementChild.parentNode;                              //div的第一个元素节点的父节点就是div本身          **注:若把 children 换为childNodes 以及把后面全部的Element去掉,则会选取所有类型的节点**
@@ -1536,7 +1534,7 @@ var div = document.querySelector("div");var allNodes = div.childNodes;          
 二:创建节点               1.创建一个div(元素节点)          var ele = document.createElement("div");     2.添加到body中          document.body.appendChild(ele); //添加到body的最后一个子节点之后; 
 ​     
 
-![Image(17)](E:\每日笔记\gitJavaScript\Image(17).png)
+![Image(17).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(17).png?raw=true)
 
 ​      3.创建一个text(文本节点)          var text = document.createTextNode("这个是文本节点");      4.添加到div中          ele.appenChild(text);
 
