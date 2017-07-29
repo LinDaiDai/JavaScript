@@ -136,7 +136,7 @@ alert(typeof(i.toString()));
 
 **6.转义字符:**
 
-![Image(11)](E:\每日笔记\gitJavaScript\Image(11).png)
+![Image(11).png](https://github.com/LinDaiDai/JavaScript/blob/master/gitJavaScript/Image(11).png?raw=true)
 
 **7.运算符:**
 
