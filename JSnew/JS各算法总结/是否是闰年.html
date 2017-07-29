@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test4</title>
+</head>
+<body>
+	<input id="txt" type="text" name="" >
+	<button id="btn">点击查询</button>
+	<script type="text/javascript">
+		
+		var btn = document.getElementById('btn');//获取按钮
+
+		btn.onclick=function(){   //给按钮点击事件
+
+		var txt = document.getElementById('txt').value;//获取文本框内的值
+		var txtV = parseFloat(txt);                //转换为浮点型
+		var result = ((txtV%4==0)&&(txtV%100!=0))||(txtV%400==0)?alert("您输入的年份是闰年!"):alert("您输入的不是闰年!");	
+		}
+	</script>
+</body>
+</html>

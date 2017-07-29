@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查找字符串中子字符串出现次数的函数</title>
+</head>
+<body>
+<script>
+    var str = "abcdefgabcdefgabcdefg";
+
+    // 定义一个查找字符串中子字符串出现次数的函数
+    function substrCount(str, substr) {
+        var count = 0;              //记录子字符串出现的次数
+        var len = substr.length;    //子字符串的长度
+        var fromIndex = 0;          //每次查找开始的位置
+        for (; fromIndex < str.length;) {    //当开始查找的位置小于字符串的长度时结束循环
+            var index = str.indexOf(substr, fromIndex);//从指定位置fromIndex开始查找substr 找到的substr把它的下标赋值给index
+            if (index != -1) {          //如果查找到了则把count++
+                count += 1;
+                fromIndex = index + len;//把查找开始的位置设为当前查找到的下标+子字符串长度
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
+    alert(substrCount(str, "cde"));
+
+</script>
+</body>
+</html>

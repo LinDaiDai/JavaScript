@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>是否是质数</title>
+</head>
+<body>
+    <script>
+        //定义一个函数,是否是质数;
+         function isPrime(num){
+              for(var i=2;i<num;i++){
+                   if(num%i==0){
+                       return false;
+                   }
+              }
+             return true;
+          }
+        //定义一个函数,这个函数可以计算俩个数之间的所有的质数的和;
+         function add(a,b){
+             var sum = 0;
+                 for(var i=a;i<=b;i++){
+                 	if(isPrime(i)){
+                 	   	sum+=i;
+                 	   }
+                 	}
+                 	return sum;
+         }
+         alert(add(3,7))
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菱形</title>
+</head>
+<body>
+<script>
+    var n = 5;
+    for(var i=0;i<n;i++){
+        for(var j=n-1-i;j>0;j--){
+            document.write("&nbsp;")
+        }
+        for(var j=0;j<2*i+1;j++){
+            document.write("*")
+        }
+        document.write("<br>")
+    }
+
+    var m=n-1;
+    for(var i=0;i<m;i++){
+        for(var j=0;j<i+1;j++){
+            document.write("&nbsp;");
+        }
+        for(var j=2*(m-i)-1;j>0;j--){
+            document.write("*");
+        }
+        document.write("<br>")
+    }
+</script>
+</body>
+</html>

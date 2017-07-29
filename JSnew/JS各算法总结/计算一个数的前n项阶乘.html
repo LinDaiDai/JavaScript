@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算一个数的前n项阶乘</title>
+</head>
+<body>
+    <script>
+         var num=parseInt(prompt("请输入一个数计算其阶乘:"));//用户输入数字num;
+
+         alert(num+"的阶乘为:"+jiechen(num));				//调用阶乘函数;
+         function jiechen(num){								//定义阶乘函数
+//         		var sum = 1;
+//         		for(var j=num;j>0;j--){             //利用for循环求数num的阶乘
+//         			sum*=j;
+//         		}
+//         		return sum;
+             if(num==1) return 1;                   //利用递归求数num的阶乘
+             return num*jiechen(num-1);
+         }
+    </script>
+</body>
+</html>

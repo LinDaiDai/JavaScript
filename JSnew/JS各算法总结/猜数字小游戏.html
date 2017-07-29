@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>猜数字小游戏</title>
+</head>
+<body>
+<script>
+    while(true){
+        var num = randomInt(0,100);
+        while(true){
+            var guess = parseInt(prompt("请输入一个数"));
+            if(guess==num){
+                alert("恭喜你猜对了");
+                break;
+            }else if(guess<num){
+                alert("你猜小了");
+            }else{
+                alert("你猜大了");
+            }
+        }
+        var again=confirm("是否再玩一局");
+        if(!again){
+            break;
+        }
+    }
+    //定义一个随机生成一个从from到to的随机数
+    function randomInt(from,to){
+        var num =parseInt((Math.random()*(to+1-from))+from);
+        return num;
+    }
+</script>
+</body>
+</html>

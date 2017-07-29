@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>各位数取值</title>
+</head>
+<body>
+    <script>
+        //一个4位数取值: 如 num = 1234;
+        var num1 = parseInt(num/1000);              //取千位
+        var num2 = parseInt((num%1000)/100);         //百位
+        var num3 = parseInt(((num%1000)%100)/10);   //十位
+        var num4 = parseInt((((num%1000)%100)%10)); //个位
+
+        //一个3位数取值: 如 num = 123;
+        var num1 = parseInt(num/100);           //取百位
+        var num2 = parseInt((num%100)/10);      //十位
+        var num3 = parseInt(((num%100)%10));    //个位
+    </script>
+</body>
+</html>
