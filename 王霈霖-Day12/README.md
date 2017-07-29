@@ -1,3 +1,0 @@
-# README
-
-JavaScript笔记
