@@ -10,7 +10,7 @@
 
 ​	DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。
 
-​	![img1](E:\JavaScript\DomImg\img1.png)
+​	![img1](https://github.com/LinDaiDai/JavaScript/blob/master/DomImg/img1.png?raw=trueE:\JavaScript\DomImg\img1.png)
 
 ​	**HTML**文档可以说由节点构成的集合，DOM节点有:
 
@@ -200,7 +200,7 @@ console.log(p);
 
 根节点不可能有父节点
 
-![img2](E:\JavaScript\DomImg\img2.png)
+![img2](https://github.com/LinDaiDai/JavaScript/blob/master/DomImg/img2.png?raw=true)
 
 
 
