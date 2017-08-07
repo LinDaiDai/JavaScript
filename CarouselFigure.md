@@ -2,7 +2,7 @@
 
 ### 1.无缝不停轮播
 
-​	![img1](E:\JavaScript\CarouselFigureImg\img1.png)
+​	![img1](https://github.com/LinDaiDai/JavaScript/blob/master/CarouselFigureImg/img1.png?raw=true)
 
 ​	**1. body布局:**
 
