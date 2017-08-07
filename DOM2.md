@@ -277,4 +277,4 @@ btn.onclick = function (e){
 
 > 当前光标相对于浏览器浏览器窗口客户区域左上角的坐标(客户区域不包括状态栏、菜单栏等。)
 
-![img3](E:\JavaScript\DomImg\img3.png)
+![img3](https://github.com/LinDaiDai/JavaScript/blob/master/DomImg/img3.png?raw=true)
