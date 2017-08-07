@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test7</title>
+</head>
+<body>
+	请输入第一个数:<input id="txt1" type="text" name="">
+	请输入第二个数:<input id="txt2" type="text" name="">
+	<button id="btn1">点击查询最大公约数</button>
+	<button id="btn2">点击查询最小公倍数</button>
+	<script type="text/javascript">
+		var btn1 = document.getElementById('btn1');
+		//点击按钮1,查看最小公约数
+		btn1.onclick=function(){
+			var m = document.getElementById('txt1').value;
+			var n = document.getElementById('txt2').value;
+				if(m==1||n==1){
+ 				alert("1");
+ 			}else if(m>n){
+ 	 		for(var i=m;i>=2;i--){
+ 	 			if((m%i==0)&&(n%i==0)){
+ 	 			alert("最大公约数为:"+i);
+ 	 			break;
+ 	 			}
+ 		 		}
+ 			}else{
+ 			for(var i=n;i>=2;i--){
+ 			if((m%i==0)&&(n%i==0)){
+ 	 			alert("最大公约数为:"+i);
+ 	 			break;
+ 	 	  }
+ 			}
+ 		}
+ 
+		}
+          //点击按钮2,查询最大公约数;
+          var btn2 = document.getElementById('btn2');
+          btn2.onclick=function(){
+          	var m = document.getElementById('txt1').value;
+			var n = document.getElementById('txt2').value;
+			if(m==1||n==1){
+			   var sum = m>n?alert(m):alert(n);	
+			}else {
+               for(var i=1;i>=1;i++){
+               	if((i%m==0)&&(i%n==0)){
+               		alert("最小公倍数是:"+i);
+               		break;
+               	}
+               }
+			}
+          }
+
+	</script>
+</body>
+</html>

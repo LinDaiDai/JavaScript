@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大器</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #product{
+            position: relative;
+            width: 300px;
+            height: 200px;
+            left: 100px;
+            top: 100px;
+        }
+        #small{
+            border: 1px solid black;
+            width: 300px;
+            height: 200px;
+            position: relative;
+        }
+        #small img{
+            width: 100%;
+            height: 100%;
+        }
+        #small > #popup{
+            width: 100px;
+            height: 100px;
+            background-color:pink;
+            opacity: 0.6;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+            display: none;
+        }
+        #product > #big{
+            width: 400px;
+            height: 266px;
+            position: relative;
+            left: 312px;
+            top: -202px;
+            display: none;
+            overflow: hidden;
+        }
+        #product > #big img{
+            position: absolute;
+            width: 1200px;
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div id="product">
+        <div id="small">
+            <img src="img/img1small.jpg">
+            <div id="popup"></div>
+        </div>
+        <div id="big"><img src="img/img1.jpg" alt=""></div>
+    </div>
+<script>
+    var product = document.querySelector('#product');
+    var popup = document.querySelector('#popup');
+    var big = document.querySelector('#big');
+    var small = document.querySelector('#small');
+    var bigImg = document.querySelector('#big > img');
+    var productLeft = product.offsetLeft;
+    var productTop = product.offsetTop;
+
+    product.onmouseover=function(){
+        popup.style.display='block';
+        big.style.display='block';
+    };
+    product.onmouseout=function(){
+        popup.style.display='none';
+        big.style.display='none';
+    };
+
+    product.onmousemove=function(e){
+        var clientX = e.clientX;
+        var clientY = e.clientY;
+        var left = clientX - productLeft -popup.offsetWidth/2;
+        var top = clientY- productTop - popup.offsetHeight/2;
+
+        var maxLeft = product.offsetWidth-popup.offsetWidth;
+        var maxTop = product.offsetHeight-popup.offsetHeight;
+
+        left = left<=0?0:left;
+        left = left>=maxLeft?maxLeft:left;
+        top = top<=0?0:top;
+        top = top>=maxTop?maxTop:top;
+
+        popup.style.left=left+'px';
+        popup.style.top=top+'px';
+
+        bigImg.style.left = -left/maxLeft * 800 +'px';
+        bigImg.style.top = -top/maxTop * 534 + 'px';
+    };
+
+</script>
+</body>
+</html>

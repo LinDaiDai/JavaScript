@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>提前数组中的相同项</title>
+</head>
+<body>
+	<script type="text/javascript">
+	var arr1 = [12,14,14,15,16];
+	var arr2 = [13,14,15,17,16];
+		
+		//定义函数将相同项提取出来
+		function sameElement(arr1,arr2){
+			var sameArr= new Array();
+			for(var i=0;i<arr1.length;i++){
+				for(var j=0;j<arr2.length;j++){
+					if(arr1[i]==arr2[j]){
+						var exists = false;
+						for(var s=0;s<sameArr.length;s++){
+							if(sameArr[s]==arr1[i]){
+								exists=true;
+							}
+						}
+						if(!exists) sameArr[sameArr.length]=arr1[i];
+					}
+				}
+			}
+			return sameArr;
+		}
+	
+		var newArr1 = sameElement(arr1,arr2);
+		
+		document.write("俩数列相同的部分有:"+newArr1);
+	</script>
+</body>
+</html>

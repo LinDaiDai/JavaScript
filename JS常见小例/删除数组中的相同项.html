@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>删除数组中的相同项</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arr1 = [1,1,2,3,4,6,8,4,1,6,8,6,8,10,11,10];
+
+		//分析:用arr的每一项和这一项后面的所有项进行遍历,有相同项的删除
+		function noRepeat(arr) {
+			for(var i=0;i<arr.length;i++){	//对arr中的每一个元素进行遍历
+			    for(var j=i+1;j<arr.length;j++){//对除了arr[i]这一项的之后的所有元素遍历;
+			        if(arr[i]==arr[j]){		//若这一项(arr[i])和它的下一项(arr[j])相等;
+			            arr.splice(j,1);	//把它的下一项删除;
+			            j--;				//让j的值不增加,保证还是从arr[j]这一项开始查;
+					}
+				}
+			}
+			return arr;
+        }
+		document.write(noRepeat(arr1));
+//		var arr2 = arr1.slice();//将数组arr1复制一份并存到arr2中;
+//		arr2.reverse();			//将数组2倒序;
+//		function noRepeat(arr1){	//定义一个消除重复元素的函数;
+//			for(var i=0;i<arr1.length;i++){	//对数组arr1遍历,让它的每一项都和数组arr2比较
+//				var sum = 0;				//定义一个变量sum用来盛放获取到俩个数组重复的次数;
+//				for(var j=0;j<arr2.length;j++){	 //对数组arr2遍历
+//					if(arr1[i]==arr2[j]){		//判断arr1中是否有和arr2相同的项
+//						sum+=1;					//累加相同的项的次数
+//					}
+//				}
+//				if(sum>1){						//判断若俩个数组中相同的项的
+//					var num = arr1[i];			//定义一个变量用来盛放判断到的相等的项
+//					var index = arr1.indexOf(num);	//定义一个变量用来盛放从数组中查找到这个项的下标;
+//					arr1.splice(index,1);			//将这个项移除出数组arr1;
+//					arr2 = arr1.slice();			//把移除了相同项的数组赋值给数组arr2;
+//					arr2.reverse();					//再将arr2倒叙;
+//				}
+//			}
+//			return arr1;							//输出去除了相同项的数组arr1
+//		}
+//
+//		var arr1New = noRepeat(arr1);  //调用函数noRepeat()
+//
+//		for(var i=0;;i++){	//对新的arr1进行循环,直到arr1中没有相同项
+//			if(isrepeat(arr1New)){
+//				noRepeat(arr1New);
+//			}else{
+//				break;
+//			}
+//		}
+//		alert(arr1New);
+//		//定义一个函数判断数组中是否有相同的项
+//		function isrepeat(arr){
+//			for(var i=0;i<arr.length;i++){
+//				var sum1 = 0;
+//				for(var j=arr.length-1;j>0;j--){
+//					if(arr[i]==arr[j]){
+//						sum1+=1;
+//					}
+//				}
+//				if(sum1>1) return true;
+//			}
+//			return false;
+//		}
+
+	</script>
+</body>
+</html>

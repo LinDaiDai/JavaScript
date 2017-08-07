@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test2</title>
+</head>
+<body>
+	<script type="text/javascript">
+			
+
+		function runYear(txtV){
+				return (txtV%4==0)&&(txtV%100!=0)||(txtV%400==0)
+			}
+		function add(fromYear,toYear){        //打印区间内的所又闰年
+			var sum = 0;
+			for(var i=fromYear;i<=toYear;i++){
+				if(runYear(i)){
+					sum+=1;
+					document.write(i+"<br>")
+				}
+			}
+			
+		}	
+		add(1999,2050);
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定义函数取范围在0~5互不相等的随机数</title>
+</head>
+<body>
+    <script>
+        //取n个范围在0~5的互不相等的随机数
+        function threeRandom(n){
+            var arr = new Array();
+            var count=0;
+            for(var i=0;i<1000;i++){
+                var num = randomInt(0,5);
+                if(arr.indexOf(num)!=-1){   //直接使用子字符串查找
+                    continue;
+                }else{
+                    arr.push(num);
+                    count++;
+                }
+                if(count==n){
+                    return arr;
+                }
+            }
+        }
+
+        //随机函数
+        function randomInt(from,to){
+            return parseInt(((Math.random()*(to+1-from))-from));
+        }
+    </script>
+</body>
+</html>

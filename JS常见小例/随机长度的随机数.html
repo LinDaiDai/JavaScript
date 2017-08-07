@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test4</title>
+</head>
+<body>
+<script>
+    //定义一个能取n个随机数,并把n个随机数放到数组里的函数,函数返回新得到的数组;
+    function random(n) {
+        var randomNumber = ["_"];		//存放随机数库中的所有随机数;
+        var arr = new Array();		//存放获取到的随机数
+        //将26个小写字母和大写字母存入数组randomNumber中;
+        for (var i = 0; i < 26; i++) {
+            randomNumber.push(String.fromCharCode(97 + i)); //26个小写字母
+            randomNumber.push(String.fromCharCode(97 + i).toUpperCase());
+        }
+        //将10个数字存入数组randomNumber中;
+        for (var i = 0; i < 10; i++) {
+            randomNumber.push(i);
+        }
+        //随机取随机数库中的随机数的下标并赋值给index;
+        for (var i = 0; i < n; i++) {
+            var index = randomInt(0, randomNumber.length - 1);
+            arr.push(randomNumber[index]);
+        }
+        return arr;
+    }
+
+    document.write("随机数为:" + random(randomInt(5, 10)));
+    //定义一个随机生成一个从from到to的随机数
+    function randomInt(from, to) {
+        var num = parseInt((Math.random() * (to + 1 - from)) + from);
+        return num;
+    }
+</script>
+</body>
+</html>

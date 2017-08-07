@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test9</title>
+</head>
+<body>
+	<input id="txt1" type="text" name="" placeholder="请输入第一个数">
+	<input id="txt2" type="text" name="" placeholder="请输入第二个数">
+	<button id="btn1">点击查询最大公约数</button>
+	<button id="btn2">点击查询最小公倍数</button>
+	<input id="txt3" type="text" name="" placeholder="最大公约数">
+	<input id="txt4" type="text" name="" placeholder="最小公倍数">
+	<script type="text/javascript">
+		var inputs = document.getElementsByTagName('input');
+		var btn1 = document.getElementById('btn1');
+		btn1.onclick=function(){
+			var num1 = +inputs[0].value;
+			var num2 = +inputs[1].value;
+
+			inputs[2].value=max(num1,num2);
+			inputs[3].value = min(num1,num2);
+		}
+		function max(num1,num2){
+			var minSum = num1>num2?num2:num1;
+
+			for(var i=minSum;i>=1;i--){
+				if((num1%i==0)&&(num2%i==0)){
+					return i;
+				}
+			}
+		}
+		function min(num1,num2){
+			var maxSum = num1>num2?num1:num2;
+
+			for(var i=maxSum; ;i++){
+				if((i%num1==0)&&(i%num2==0)){
+					return i;
+				}
+			}
+		}
+		//点击按钮1,查看最大公约数
+	// 	btn1.onclick=function(){									//定义点击事件
+	// 		var txt1 = document.getElementById('txt1').value;
+	// 		var txt2 = document.getElementById('txt2').value;
+	// 		var txt3 = document.getElementById('txt3').value=max(txt1,txt2);
+		
+	// 		function max(m,n){									//定义求最大公约数的函数
+	// 		if(m==1||n==1){
+ // 				return 1;
+ // 			}else if(m>n){
+ // 	 		for(var i=m;i>=2;i--){
+ // 	 			if((m%i==0)&&(n%i==0)){
+ // 	 			return i;
+ // 	 			break;
+ // 	 				}
+ // 		 		}
+ // 			}else{
+ // 			for(var i=n;i>=2;i--){
+ // 			if((m%i==0)&&(n%i==0)){
+ // 	 			return i;
+ // 	 			break;
+ // 	 	 		 	}
+ // 				}
+ // 			}
+	// 	}
+	// }
+ //          //点击按钮2,查询最小公倍数;
+ //          var btn2 = document.getElementById('btn2');
+ //          btn2.onclick=function(){
+ //          	var txt1 = document.getElementById('txt1').value;
+	// 		var txt2 = document.getElementById('txt2').value;
+	// 		var txt4 = document.getElementById('txt4').value=min(txt1,txt2);
+		
+	// 		function min(m,n){					//定义最小公倍数的函数
+	// 		if(m==1||n==1){						//将m和n做比较
+	// 		   var sum = m>n?m:n;
+	// 		   return sum;	
+	// 		}else{
+ //               for(var i=1;i>=1;i++){
+ //               	if((i%m==0)&&(i%n==0)){
+ //               		return i;         		
+ //               			}
+ //               		}
+	// 			}
+	// 		}
+         // }
+
+
+
+
+	</script>
+</body>
+</html>

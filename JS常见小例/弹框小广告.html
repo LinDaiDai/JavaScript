@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test2</title>
+    <style>
+        #box{
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            font-size: 30px;
+            color: white;
+            background: url("img/girl.jpg") no-repeat center;
+        }
+        #box p{
+            font-size: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        点击了解详情
+        <p>QQ:2579333424</p>
+        <p>手机:15079020130</p>
+    </div>
+    <script>
+        var box = document.getElementById("box");
+        var timer;
+        timer=setInterval(function () {
+
+            box.style.display='block';
+            box.style.left=randomInt(0,window.innerWidth-box.offsetWidth)+'px';
+            box.style.top=randomInt(0,window.innerHeight-box.offsetHeight)+'px';
+           setTimeout(function () {
+                box.style.display='none';
+           },800)
+        },1000);
+        //定义一个随机生成一个从from到to的随机数
+        function randomInt(from, to) {
+            var num = parseInt((Math.random() * (to + 1 - from)) + from);
+            return num;
+        }
+        //点击清除div
+        box.onclick=function () {
+            window.open("http://www.33eee.com", "", "width=1200, height=800");
+                clearInterval(timer);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test2</title>
+	<style type="text/css">
+		body{
+			font-size: 20px;
+
+		}
+		div{
+			font-size: 30px;
+			color: blue;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div>航班:北京→马尔代夫</div>
+	请输入您要购买的月份(仅数字):
+	<input id="txt1" type="text" name=""><br>
+	请选择您要购买的舱型:
+	<select id="sec">
+		<option value="1">头等舱</option>
+		<option value="2">经济舱</option>
+	</select>
+	<button id="btn">点击查询票价</button>
+	<script type="text/javascript">
+		var btn = document.getElementById('btn');
+		btn.onclick=function(){
+			var month = parseInt(document.getElementById('txt1').value);
+			var sec =  parseInt(document.getElementById('sec').value);
+		    var sum = 0;
+			if(month>=4&&month<=10){
+				if(sec==1){
+                    sum=4000*0.9;
+
+				}else if(sec==2){
+					sum=4000*0.75;
+				}
+				alert("您选择的机票总计为:"+sum);
+			}else if((month>=1&&month<3)||(month>10&&month<=12)){
+				if (sec==1){
+					sum=4000*0.6;
+				}else if (sec==2){
+					sum=4000*0.3;
+				}
+				alert("您选择的机票总计为:"+sum);
+			}else{
+				alert("您输入的月份有误!请重新输入!")
+			}
+			
+		}
+
+
+	</script>
+</body>
+</html>

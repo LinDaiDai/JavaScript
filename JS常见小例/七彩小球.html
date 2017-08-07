@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test3</title>
+    <style>
+        body{
+            position: relative;
+            height: 600px;
+            width: 1300px;
+        }
+        .qiu{
+            position: absolute;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        let eles = new Array();
+        //创建并展示球
+        let w = 0;
+        let h = 0;
+        function creatEles(){
+            let n = randomInt(20,30);
+            for(let i=0;i<n;i++){
+                let wid = randomInt(30,200);
+                let ele = document.createElement('div');
+                let eleSty = ele.style;
+                let r = randomInt(0,255);
+                let g = randomInt(0,255);
+                let b = randomInt(0,255);
+                eleSty.backgroundColor = `rgba(
+                ${randomInt(0,255)},
+                ${randomInt(0,255)},
+                ${randomInt(0,255)},
+                ${Math.random()*0.6+0.4})`;
+                w = document.body.offsetWidth-wid;
+                h = document.body.offsetHeight-wid;
+                ele.className='qiu';
+                eleSty.width=wid+'px';
+                eleSty.height=wid+'px';
+                eleSty.left=randomInt(0,w)+'px';
+                eleSty.top=randomInt(0,h)+'px';
+                document.body.appendChild(ele);
+                eles[i]=ele;
+            }
+        }
+        creatEles();
+
+        function moveAllCircles(){
+            //先找到所有球
+            let circles = document.querySelectorAll('div');
+            for(let i=0;i<circles.length;i++){
+                //运动速度
+                let speedX = randomInt(5,10);
+                let speedY = randomInt(5,10);
+                let div = circles[i];
+                setInterval(function () {
+
+                    let left = div.offsetLeft+speedX;
+                    let top = div.offsetTop+speedY;
+                    //做判断,若超出边界时,让其等于边界;
+                    if(left<=0)
+                    {
+                        speedX *=-1;
+                        left=0;
+                    }else if(left>=w){
+
+                        speedX *=-1;
+                        left=w;
+                    }else if(top<=0){
+                        speedY *= -1 ;
+                        top=0;
+                    }else if(top>=h){
+                        speedY *= -1 ;
+                        top=h;
+                    }
+                    div.style.left=left+'px';
+                    div.style.top=top+'px';
+
+                },30)
+            }
+        }
+        moveAllCircles();
+        //onmouseover动
+//            var timer =null;
+//            for(var j=0;j<eles.length;j++){
+//                eles[j].onmouseover=function () {
+//                    var iTar = randomInt(0,1100);
+//                    start(this,iTar);
+//                };
+//                //随机跑的函数
+//                function start(obj,iTarget){
+//                    clearInterval(obj.timer);
+//                    obj.timer=setInterval(function () {
+//                        var speed = (iTarget-obj.offsetLeft)/6;
+//                        speed=speed>0?Math.ceil(speed):Math.floor(speed);
+        //                        obj.style.left = obj.offsetLeft + speed + 'px';
+//                    },30)
+//                }
+//            }
+
+        //定义一个求范围的随机数的函数
+        function randomInt(from,to) {
+            return parseInt(((Math.random()*(to+1-from))+from));
+        }
+
+
+    </script>
+</body>
+</html>

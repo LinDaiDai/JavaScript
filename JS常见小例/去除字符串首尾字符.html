@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test3</title>
+</head>
+<body>
+    <script>
+        var str = "&nbsp; abc bc cd ef &nbsp;";
+        document.write(str+"<br>原来长度:"+str.length+"<br>");
+        var exp =/\s(.*)\s/;
+        exp.test(str);
+        var str1 = RegExp.$1;
+        document.write(str1+"<br>现在长度:"+str1.length);
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test7</title>
+</head>
+<body>
+		<script type="text/javascript">
+			// function add(n) {
+			// 	var sum=0;
+			// 	for(var i=2;i<=n;i++){
+			// 		var num=1;
+			// 		for(var j=1;j<i;j++){
+			// 			num=num*2;
+			// 		}
+			// 		sum+=num;
+			// 	}
+			// 	return sum+1;
+			// }
+			//定义一个计算每一个格子的麦子的数量的函数;
+			function countOne(n){
+				if(n==1) return 1;
+				return 2*countOne(n-1);
+			}
+			//定义一个每个格子麦子相加的函数:
+			function add(n){
+				var sum = 0;
+				for(var i=1;i<=n;i++){
+					sum+=countOne(i);
+				}
+				return sum;
+			}
+			alert("国王你特么傻啊?要摆满要"+add(64)+"粒粮食,你是想破产哦?");
+
+
+
+		</script>
+</body>
+</html>

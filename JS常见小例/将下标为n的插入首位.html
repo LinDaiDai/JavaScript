@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test1</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arr = [1,2,3,4,5,6,7,8]
+		//定义
+		function advance(arr,n){	
+			var sum = arr.splice(n,1);	//将下标为n的元素从原数组中删除并赋值给sum;
+			arr.unshift(sum);
+			return arr;
+		}
+		document.write("将下标为3的元素添加至数组首位:"+advance(arr,3)); 
+	</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片轮播及指示器</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .container > .picture {
+            position: absolute;
+            width: 600px;
+            height: 100%;
+            list-style: none;
+        }
+
+        .container > .picture > li {
+            position: absolute;
+            width: 600px;
+            height: 100%;
+        }
+
+        .container > .picture > li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container > .arrow{
+            position: absolute;
+            height: 70px;
+            width: 100%;
+            top: 40%;
+            left: 0;
+            list-style: none;
+        }
+
+        .container > .arrow > li {
+            width: 40px;
+            height: 70px;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .container > .arrow > li:nth-child(1) {
+            float: left;
+            background: url("img/arrow_left1.png");
+        }
+
+        .container > .arrow > li:nth-child(2) {
+            float: right;
+            background: url("img/arrow_right1.png");
+        }
+
+        .container > .arrow > li:nth-child(1):hover {
+            background: url("img/arrow_left2.png");
+        }
+
+        .container > .arrow > li:nth-child(2):hover {
+            background: url("img/arrow_right2.png");
+        }
+
+        .container .bottom {
+            position: relative;
+            margin: 0 auto;
+            width: 215px;
+            height: 40px;
+            top: 350px;
+            border-radius: 20px;
+            background-color: grey;
+        }
+
+        .container > .bottom > ul{
+            position: absolute;
+            height: 30px;
+            width: 205px;
+            bottom: 20px;
+            list-style: none;
+            top: 5px;
+            left: 5px;
+        }
+
+        .container > .bottom > ul > li{
+            float: left;
+            height: 100%;
+            width: 30px;
+            margin: 0 5px 0 0;
+            padding: 0;
+            border-radius: 50%;
+            background-color: white;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+        <ul class="picture">
+            <li><img src="img/img1.jpg"></li>
+            <li><img src="img/img2.jpg"></li>
+            <li><img src="img/img3.jpg"></li>
+            <li><img src="img/img4.jpg"></li>
+            <li><img src="img/img5.jpg"></li>
+            <li><img src="img/img6.jpg"></li>
+        </ul>
+        <ul class="arrow">
+            <li class="arrowLeft"></li>
+            <li class="arrowRight"></li>
+        </ul>
+    <div class="bottom">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li style="margin:0">6</li>
+        </ul>
+    </div>
+</div>
+<script>
+    var container = document.querySelector('.container');
+    var pictureLis = document.querySelectorAll('.container > .picture > li');
+    var optionLis = document.querySelectorAll('.container > .bottom >ul > li');
+    var arrowLeft = document.querySelector('.container .arrow  > .arrowLeft');
+    var arrowRight = document.querySelector('.container .arrow > .arrowRight');
+    var showIndex = 0;  //当前正在显示的图片的下标
+    //初始化
+    function init() {
+        for (var j = 0; j < pictureLis.length; j++) {
+            if (j == 0) {
+                optionLis[j].style.backgroundColor='red';
+                pictureLis[j].style.opacity = 1;
+            } else {
+                pictureLis[j].style.opacity = 0;
+            }
+        }
+        //给整个container添加事件,当鼠标上来的时候,让自动播放停止
+        container.onmouseenter = function () {
+            clearTimeout(autoPlayId);
+
+        };
+        container.onmouseleave = function () {
+            auto();
+        };
+        //给左按钮和右按钮添加点击事件
+        arrowLeft.onclick=function(){
+            optionLis[showIndex % optionLis.length].style.backgroundColor='white';
+            var preIndex = showIndex-1+pictureLis.length;
+            move(showIndex,preIndex);
+            showIndex=preIndex;
+            optionLis[showIndex%optionLis.length].style.backgroundColor='red';
+        };
+        arrowRight.onclick=function(){
+            optionLis[showIndex % optionLis.length].style.backgroundColor='white';
+            move(showIndex,showIndex+1);
+            showIndex++;
+            optionLis[showIndex%optionLis.length].style.backgroundColor='red';
+        };
+        //给指示器添加onmouseenter事件,使得图片与指示器同步
+        for(let i=0;i<optionLis.length;i++){
+            optionLis[i].onmouseenter=function(){
+
+                move(showIndex,i);
+                optionLis[showIndex%optionLis.length].style.backgroundColor='white';
+                optionLis[i%optionLis.length].style.backgroundColor='red';
+                showIndex=i;
+            }
+        }
+    }
+    init(); //调用初始化
+
+    //图片移动
+    function move(showIndex,nextIndex) {
+        setTimeout(function step() {
+            pictureLis[showIndex % pictureLis.length].style.opacity -= 0.05;
+            pictureLis[nextIndex % pictureLis.length].style.opacity =
+                +pictureLis[nextIndex % pictureLis.length].style.opacity + 0.05;
+            if (pictureLis[showIndex % pictureLis.length].style.opacity <= 0||pictureLis[nextIndex%pictureLis.length].style.opacity>=1) return;
+            setTimeout(step, 5)
+        }, 0)
+    }
+
+    //自动播放
+    var autoPlayId;     //自动播放定时器id
+    function auto() {
+        autoPlayId = setTimeout(function autoStep() {
+            optionLis[showIndex].style.backgroundColor = "white";
+            move(showIndex,showIndex+1);    //切换下一张图片
+            showIndex++;
+            if (showIndex == pictureLis.length) showIndex = 0;
+            optionLis[showIndex%optionLis.length].style.backgroundColor = "red";
+            autoPlayId = setTimeout(autoStep,2000);
+        }, 2000)
+    }
+    auto();
+</script>
+</body>
+</html>

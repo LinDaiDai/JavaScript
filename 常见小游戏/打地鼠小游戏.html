@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打地鼠小游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #game {
+            width: 1000px;
+            height: 600px;
+            margin: 20px auto;
+            background:url("img/back.jpg");
+        }
+
+        #game .mouses {
+            position: relative;
+            width: 1000px;
+            height: 500px;
+
+        }
+
+        #game .mouses .img1{
+            width: 60px;
+            position: absolute;
+        }
+        #game .btn {
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        #game #start {
+            width: 100px;
+            height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="game">
+    <div class="mouses">
+    </div>
+    <div class="btn">
+        <input type="radio" name="level" value="1">容易
+        <input type="radio" name="level" checked="checked" value="2">一般
+        <input type="radio" name="level" value="3">困难
+        <button id="start">开始游戏</button>
+    </div>
+</div>
+<script>
+    var EASY_LEVEL = 1000;              //定义三个常量用以储存游戏难度
+    var NORMAL_LEVEL = 600;
+    var HARD_LEVEL = 400;
+    var game = document.getElementById('game');
+    var levelRadio = document.getElementsByName('level');
+    var startBtn = document.getElementById('start');
+    var mouses = document.querySelector('.mouses');
+
+    startBtn.onclick = function () {
+        startBtn.disabled = true;         //开始游戏后让按钮不可点
+        mouses.innerHTML = "";          //清空mouses
+        var level = caculateLevel();    //引用判断难度级别的函数
+        setTimeout(function step() {    //设置定时器,每个多久产生一只老鼠
+            if (determineEnd()) return; //引用游戏结束的函数
+            createMouse(mouses);
+            setTimeout(step, level);
+        }, 0)
+
+    };
+    //判断用户选择的难度级别
+    function caculateLevel() {
+        var level;
+        for (var r of levelRadio) {     //遍历radio单选框按钮
+            if (r.checked) {            //查找出被选定的
+                var val = r.value;      //取到被选定的value值 ,判断游戏难度
+                if (val == 1) {
+                    level = EASY_LEVEL;
+                } else if (val == 2) {
+                    level = NORMAL_LEVEL;
+                } else {
+                    level = HARD_LEVEL;
+                }
+            }
+        }
+        return level;
+    }
+    //判断游戏是否要结束
+    function determineEnd() {
+        if (mouses.childElementCount == 13) {               //当老鼠的数量为13只时
+            mouses.innerHTML = '<img src="img/gameover.jpg">';
+            startBtn.disabled = false;    //结束游戏后按钮又可点了
+            return true;
+        }
+        return false;
+    }
+    var score = 0;                                  //定义分数
+    //创建一个mouse并把它添加到指定容器中
+    function createMouse(parentContainer) {
+        var img = document.createElement("img");     //产生老鼠的img标签
+        img.src = "img/mouse.png";                  //设置老鼠图片
+        img.className='img1';                       //给img添加class名
+        img.style.left = randomInt(0, 940) + 'px';
+        img.style.top = randomInt(0, 400) + 'px';
+        img.onclick = function () {                 //单点击老鼠时老鼠消失
+            this.parentNode.removeChild(this);      //也就是从它的父级移除它
+            score++;                                //分数++
+        };
+        parentContainer.appendChild(img);            //将老鼠添加到指定容器中
+    }
+    //定义一个求范围的随机数的函数
+    function randomInt(from, to) {
+        return parseInt(((Math.random() * (to + 1 - from)) + from));
+    }
+</script>
+</body>
+</html>

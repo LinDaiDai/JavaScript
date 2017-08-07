@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test6</title>
+</head>
+<body>
+<script>
+    //输入一个字符串
+    var str = prompt("请输入一组由大小写构成的字符串");
+    //定义一个首字母大写,后面都是小写字母并且单词与单词之间隔开的函数
+    function change(str1) {
+        var str = str1.split("");   //将字符串转为数组;
+        var len = str.length;       //获取数组长度;
+        for (var i = 0; i < len; i++) {     //遍历数组
+            if (i == 0) {
+                str[0] = str[0].toUpperCase();    //首字母大写
+            } else {
+                if (isUpper(str[i])) {            //调用isUpper函数判断是否大写
+                    str[i] = str[i].toLowerCase();  //若有大写字母则转小写
+                    str.splice(i, 0, " ");        //再当前位置插入空格
+                }
+            }
+        }
+        return str.join("");            //获取到的数组是用,连接的,将他转为""连接
+    }
+    document.write(change(str));
+    //定义检验是否是大写字母的函数
+    function isUpper(substr) {
+        var substrCode = substr.charCodeAt(0);
+        if (substrCode >= 65 && substrCode <= 90) {
+            return true;
+        }
+        return false;
+    }
+
+</script>
+</body>
+</html>

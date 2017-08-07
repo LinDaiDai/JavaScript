@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test1</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            position: relative;
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+        }
+        .container > ul{
+            position: absolute;
+            width: 3000px;
+            height:100%;
+            list-style: none;
+        }
+        .container > ul >li{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 600px;
+            height: 100%;
+            opacity: 0;
+        }
+        .container > ul >li:nth-child(1){
+            opacity: 1;
+        }
+        .container > ul >li img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+   <div class="container">
+       <ul>
+           <li><img src="img/img1.jpg"></li>
+           <li><img src="img/img2.jpg"></li>
+           <li><img src="img/img3.jpg"></li>
+           <li><img src="img/img4.jpg"></li>
+
+       </ul>
+   </div>
+    <script>
+        var ul = document.querySelector(".container > ul");	 //获取ul
+        var lis = document.querySelectorAll('.container > ul >li');
+        var i = 0;
+        for(var i=0;i<lis.length;i++){
+            if(i==0){
+                lis[i].style.opacity=1;
+            }else{
+                lis[i].style.opacity=0;
+            }
+        }
+        var i=0;
+        var time = 50;
+        setTimeout(function step(){					//设置定时器
+            lis[i%4].style.opacity=lis[i%4].style.opacity-0.05;
+            lis[(i+1)%4].style.opacity=parseFloat(lis[(i+1)%4].style.opacity)+0.05;
+            if(lis[i%4].style.opacity==0){
+                i++;
+                time = 1000;
+            }else{
+                time =50
+            }
+
+            setTimeout(step,time);
+        },0)
+
+    </script>
+
+</body>
+</html>

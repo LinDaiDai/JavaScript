@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test4</title>
+</head>
+<body>
+<input id="input1" type="button" value="点我可以转换我的状态" onclick="myFunction();">
+	<script type="text/javascript">
+
+		//方法一
+    // for(var i=1; ;i++){
+    //    var n=i;     
+    //    var tao=5*n;
+    //    for(var j=1;j<5;j++){
+    //       tao=(tao+1)*(5/4);
+    //    }
+    //    if(parseInt(tao)===tao){
+    //    		alert(tao+1);
+    //    break;
+    //    }
+    // }
+
+		//方法二
+  //   var count = 6;  //表示桃子数;
+  //   var ok =false;   //表示是否找到桃子数
+  // for(; ; count++){
+  //   	var temp=count;
+  //   for(var monkey =1;monkey<=5;monkey++){
+  //   	if((temp-1)%5==0){
+  //   		if(monkey==5){
+  //   			ok = true;
+  //   			break;
+  //   		}
+  //   		temp=(temp-1)*0.8
+  //   	}else{
+  //   		break;
+  //   	}
+  //    }
+  //    if(ok) break;
+  //   }
+  //   console.log(count);
+
+
+	//方法三
+ // var count=6;
+ // var ok = false;
+ // for(; ;count++){
+ // 	var temp = count;
+ // 	for(var monkey=1;monkey<=5;monkey++){
+ // 		if((temp-1)%5==0){
+ // 			if(monkey==5){
+ // 				ok=true;
+ // 				break;
+ // 			}
+ // 			temp=(temp-1)*0.8;
+			
+ // 		}else{
+ // 			break;
+ // 		}
+ // 	}
+ // 	if(ok) break;
+ // }
+ // console.log(count);
+
+//利用数组输出一个数组中的所有质数并输出
+// var arr = [1,2,3,4,5,6,7,8,9,10];
+// var primes = new Array();             //用来盛放质数的数组
+// var other = new Array();              //用来盛放除了质数的数组
+// for(var i=0;i<arr.length;i++){
+//   if(isPrime(arr[i])){
+//     primes.push(arr[i]);
+//     //primes[primes.length]=arr[i];   或者用最后一位的下标添加
+//   }else{
+//     other[other.length]=arr[i];
+//   }
+// }
+// document.write(primes+"<br>");
+// document.write(other+"<br>");
+
+//定义一个是否是质数的函数
+// function isPrime(n){
+//   for(var i=2;i<n;i++){
+//     if(n%i==0) return false;
+//   }
+//   return true;
+// }
+
+// //利用数组求某个范围内的质数并输出
+// var n=10;
+// var m=100;
+// var arr = new Array();
+// var primes = new Array;
+// for(var i=1;i<=m-n;i++){
+//   arr[0]=n;
+//   arr[i]=arr[i-1]+1;
+//   if(isPrime(arr[i])){
+//     primes[primes.length] = arr[i];
+//   }
+// }
+// document.write(primes);
+	</script>
+</body>
+</html>

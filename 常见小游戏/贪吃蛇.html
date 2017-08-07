@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <style>
+        ul{
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            width: 450px;
+            height: 450px;
+            list-style: none;
+            margin: 20px auto;
+            padding: 0;
+        }
+        li{
+            box-sizing: border-box;
+            border: 1px solid black;
+            border-right: none;
+            border-bottom: none;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            margin: 0;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+    </ul>
+    <script>
+        var ul = document.querySelector('ul');
+        var direction = 'right';
+        var food = [];          //定义食物
+        var speed = 700;
+        init();
+
+        //蛇的身体
+        var lis =lis2TwoArray();  //储存全部区域的每一个下标
+        var snake = [];          //定义蛇的身体
+        var redLi = isRed();
+        autoMove();             //引用设置自动移动
+        initSnake();            //引用初始化蛇的身体
+        putFood(redLi);              //引用产生食物
+
+        //初始化界面
+        function init(){
+            for(var i=0;i<225;i++){
+                var li = document.createElement('li');
+                ul.appendChild(li);
+            }
+            //知道你按下了什么键
+            document.onkeydown = function (e){  // a 65 s 83  d 68  w 87
+                changeDirection(e.keyCode);
+            }
+        }
+        //定义键盘监听,控制蛇的移动
+        function changeDirection(code){
+            switch (code){
+                case 65:    // 左
+                case 37:
+                    if(direction=="right") return;
+                    direction = "left";
+                    break;
+                case 68:  // 右
+                case 39:
+                    if (direction == "left") return;
+                    direction = "right";
+                    break;
+                case 87:  // 上
+                case 38:
+                    if (direction == "down") return;
+                    direction = "up";
+                    break;
+                case 83:  // 下
+                case 40:
+                    if (direction == "up") return;
+                    direction = "down";
+                    break;
+            }
+        }
+        //定义一个二维数组,用以储存蛇身体的下标
+        function lis2TwoArray(){
+            var lis = [];       //最终的二维数组
+            for(var i = 0;i<15;i++){
+                var temp = [];
+                for(var j=0;j<15;j++){
+                    temp.push(ul.children[i*15+j]);
+                }
+                lis.push(temp);
+            }
+            return lis;
+        }
+        //蛇自动移动
+        function autoMove(){
+            setTimeout(function step(){
+                move();
+                if(isSame(snake)){        //引用数组中是否有相同项
+                    alert('咬到自己了!!');
+                    return;
+                }
+                if(isGameOver()){         //引用游戏结束函数
+                    alert('游戏结束了!');
+                    return;
+                }
+                if(eatFood()){          //若吃到了食物
+                    var redLi = isRed();
+                    putFood(redLi);
+                }
+                setTimeout(step,speed);
+            },500)
+        }
+        //初始化蛇的身体
+        function initSnake(){
+            //生成蛇头的下标
+            var headIndexX = randomInt(0,14);
+            var headIndexY = randomInt(3,11);
+            snake.push([headIndexX,headIndexY]);
+            snake.push([headIndexX,headIndexY-1]);
+            snake.push([headIndexX,headIndexY-2]);
+            showSnake();
+        }
+        //移动蛇
+        function move(){
+            var last = snake.pop();
+            lis[last[0]][last[1]].style.backgroundColor='';
+            var x = snake[0][0];
+            var y = snake[0][1];
+            switch (direction){
+                case "right":
+                    snake.unshift([x, y + 1]);
+                    break;
+                case "down":
+                    snake.unshift([x + 1, y]);
+                    break;
+                case "left":
+                    snake.unshift([x, y - 1]);
+                    break;
+                case "up":
+                    snake.unshift([x - 1, y]);
+                    break;
+            }
+            showSnake();
+        }
+
+        //显示蛇
+        function showSnake(){
+            for(var temp of snake){
+                var x = temp[0];
+                var y = temp[1];
+                var X = snake[0][0];
+                var Y = snake[0][1];
+                lis[x][y].style.backgroundColor='red';          //定义蛇身
+                lis[X][Y].style.backgroundColor='yellow';       //定义蛇头
+            }
+        }
+        function isRed(){
+            var redLi = [];
+            for(var i=0;i<15;i++){
+                for(var j=0;j<15;j++){
+                    var temp = [];
+                    if(lis[i][j].style.backgroundColor=='red'){
+                        temp.push(i);
+                        temp.push(j);
+                        redLi.push(temp);
+                    }
+                }
+            }
+            return redLi;
+        }
+        //游戏结束
+        function isGameOver(){
+            var head = snake[0];
+            var x = head[0];
+            var y = head[1];
+            if(x < 0 || y < 0 || x > 14 || y > 14){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        //定义数组中是否有重复值
+        function isSame(arr){
+            for(var i=0;i<arr.length;i++){
+                for(var j=i+1;j<arr.length-i;j++){
+                    if(arr[i][0]==arr[j][0]&&arr[i][1]==arr[j][1]){
+                        return true;
+                    }
+                }
+            }
+            return false
+        }
+        //投放食物
+        function putFood(redLi){
+            var isredLi = redLi;
+            var x;
+            var y;
+            while(true){
+                x= randomInt(0,14);
+                y= randomInt(0,14);
+                for(var n of isredLi){
+                        if(n.indexOf(x)!=-1||n.indexOf(y)!=-1){         //&&
+                            continue;
+                        }
+                }
+                break;
+            }
+            food[0]=x;
+            food[1]=y;
+            lis[x][y].style.backgroundColor='green';
+        }
+        //吃食物
+        function eatFood(){
+            //食物的坐标
+            var x = food[0];
+            var y = food[1];
+            //蛇头的坐标
+            var headX = snake[0][0];
+            var headY = snake[0][1];
+            if(x==headX && y==headY){
+                snake.push([x,y]);
+                if(speed>=200){
+                    speed-=50;
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
+        //定义随机函数
+        function randomInt(from,to){
+            return parseInt(Math.random()*(to+1-from)+from);
+        }
+    </script>
+</body>
+</html>

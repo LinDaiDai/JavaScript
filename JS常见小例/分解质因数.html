@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test2</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+	//分解质因数;
+   // var num = parseInt(prompt("请输入一个数"));
+   // var array = new Array();
+   // if(num==1){
+   // 	alert("1");
+   // }else{   
+   //   for(var i=2;i<=num;i++){
+   //   	if(num==i){
+   //   		array.push(i);
+   //   	}else if(num%i==0){
+   //          array.push(i);
+   //          num=(num/i);
+   //          i=i-1;
+   //   	}
+   //   }
+   //   alert(array.join("*"));
+   // }
+     var m = 90;
+     var msg = m+ "=";
+     for(var i =2,temp=m;i<=temp;i++){
+          if(temp%i==0){
+          	msg+=i;
+          	if(i!=temp){
+          		msg+="*"
+          	}
+          	temp/=i;
+          	i--;
+
+          }
+     }
+      console.log(msg);
+
+	</script>
+</body>
+</html>

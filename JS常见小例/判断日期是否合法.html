@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>年月份是否合法</title>
+	<style type="text/css">
+		input{
+			width: 50px;
+		}
+	</style>
+</head>
+<body>
+	<input id="text1" type="text" name="" placeholder="请输入年份">年
+	<input id="text2" type="text" name="" placeholder="请输入月份">月
+	<input id="text3" type="text" name="" placeholder="请输入日期">日
+	<button id="btn">点击查询年月份是否规范<tton>
+	<script type="text/javascript">
+	var btn = document.getElementById('btn');
+	btn.onclick=function(){
+		var year = parseInt(document.getElementById('text1').value);
+		var month = parseInt(document.getElementById('text2').value);
+		var day = parseInt(document.getElementById('text3').value);
+
+		if(isTrue(year,month,day)){							//调用isTrue函数
+			alert("您输入的年份符合规范!")
+		}else{
+			alert("您输入的年份不符合规范!请重新输入!")
+		}
+	}	
+
+		//定义年月份是否符合规范的函数
+	    function isTrue(year,month,day){
+			if(year<=0) return false;					//小于等于0的年清除
+			if(month<1||month>12) return false;			//不符合的月清除
+			if(day<1||day>31) return false;				//不符合的天数清除
+			if(month==4||month==6||month==9||month==11){	//判断30天的月份
+				if(day>30) return false;					//判断是否大于30天
+			}else if(month==2){								//判断2月
+				if(isLeapYear(year)){						//判断是否是闰年
+					if(day>29) return false;
+				}else{
+					if(day>28) return false;
+				}
+			}
+			return true;								//若以上都不满足,则代表是31天的月份,输出true
+		}
+
+		function isLeapYear(year){								//定义是否是闰年的函数
+				return (year%4==0)&&(year%100!=0)||(year%400==0);
+			}	
+	</script>
+</body>
+<ml>

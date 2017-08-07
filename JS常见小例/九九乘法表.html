@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test3</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//九九乘法表
+	var sum = 0;
+
+		for(var i=1;i<=9;i++){
+			var s=1;
+			for(var j=1;j<=i;j++){
+				
+                for(var n=s;n<=j;n++){
+                      sum=n*j;
+                      document.write(n+"*"+j+"="+sum);
+                }
+                document.write("\t");
+                s=s+1;
+			}
+			document.write("<br>")
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标跟随事件</title>
+    <style>
+        div {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            background: rgb(200,200,200);
+            border-radius: 50%;
+            position: absolute;
+            cursor: none;
+        }
+    </style>
+</head>
+<body>
+    <script>
+
+        function createDiv(n){
+            for(var i=0;i<n;i++){
+                let div = document.createElement('div');
+                var r = randomInt(0,255);
+                var g = randomInt(0,255);
+                var b = randomInt(0,255);
+                div.style.backgroundColor='rgb('+r+','+g+','+b+')';
+                document.body.appendChild(div);
+            }
+        }
+        createDiv(10);
+        let divs = document.querySelectorAll('div');
+        var timer;
+        let arr = [];           //定义数组arr用以存储鼠标每次移动的坐标
+
+        //定义小球跟随鼠标移动
+        function move(e){
+            e.cursor='none';
+            var x = e.clientX;
+            var y = e.clientY;
+            var time = 0;
+            arr.unshift([x,y]);         //将鼠标每次移动后的坐标存储起来
+            for(let i = 0;i<divs.length;i++){
+                timer = setTimeout(function(){
+                    divs[i].style.left=x+'px';
+                    divs[i].style.top = y+'px';
+                },time);
+                time=time+20;
+            }
+        }
+        //鼠标按下去
+        document.onmousedown = function (e) {
+            //给document添加mousemove事件 ,并调用move函数
+            document.addEventListener('mousemove',move);
+        };
+        //鼠标抬起
+        document.onmouseup=function(e){
+            //移出document的mousemove事件
+            document.removeEventListener('mousemove',move);
+            var time3 = 0;
+            //对arr遍历
+            for(let i=0;i<arr.length;i++){
+                step(arr);
+                function step(arr){
+                    var x = arr[i][0];
+                    var y = arr[i][1];
+                    for(let j=0;j<divs.length;j++){
+                        setTimeout(function(){
+                            divs[j].style.left=x+'px';
+                            divs[j].style.top=y+'px';
+                        },time3)
+                        time3=time3+3;
+                    }
+                }
+            }
+            arr=[];
+        };
+
+        //定义随机函数
+        function randomInt(from,to){
+            return parseInt(Math.random()*(to+1-from)+from);
+        }
+    </script>
+</body>
+</html>

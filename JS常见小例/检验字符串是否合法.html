@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>检验字符串是否合法</title>
+</head>
+<body>
+    <script>
+        var str = prompt("请输入一组字符串长度4-16, 只能包含数字、英文字符、下划线三种符号,首字符不能是数字");
+        //定义一个检验字符串是否合法的函数
+        function testStr(str){
+            if(str.length>3&&str.length<15){
+                for(var i=0;i<str.length;i++){
+                    if(i==0){
+//                        var firstCode = str.charCodeAt(0);
+//                        if(firstCode>=48&&firstCode<=57){
+//                            return false;
+//                        }
+                        if(str[i]>="0"&&str[i]<="9"){
+                            return false;
+                        }
+                    }else{
+                        var code = str.charCodeAt(i);
+                        if(!((code>=48&&code<=57)||(code>=97&&code<=122)||(code>=65&&code<=90)||str[i]=="_")){
+                            return false
+                        }
+                    }
+                }
+                return true;
+            }else{
+                return false
+            }
+        }
+        //调用函数testStr();
+        if(testStr(str)){
+            alert("您输入的字符串合法")
+        }else {
+            alert("您输入的字符串不合法")
+        }
+    </script>
+</body>
+</html>

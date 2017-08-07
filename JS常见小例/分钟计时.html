@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计时分钟</title>
+    <style>
+        p {
+            width: 200px;
+            height: 200px;
+            font-size: 30px;
+            background: palevioletred;
+        }
+    </style>
+</head>
+<body>
+<input type="text" id="input">
+<button id="btn">开始计时</button>
+<button id="stop">停止计时</button>
+<p id="p"></p>
+<!--<input id="txt1" type="text">-->
+<!--<input id="txt2" type="text">-->
+<!--<button id="btnPause">点击暂停</button>-->
+<!--<button id="btnCon">点击继续</button>-->
+<!--<button id="btnStop">立即结束</button>-->
+<!--<button id="btnAgain">重新计时</button>-->
+<script>
+    //方法一
+    var input = document.getElementById('input');
+    var btn = document.getElementById("btn");
+    var stop = document.getElementById('stop');
+    var p = document.getElementById('p');
+    var timer;
+    var minute = 0;             //初始化分
+    btn.onclick = function () {
+        if (!minute) {          //如果分没写时执行把input的值传进来
+            minute = parseInt(input.value) * 60;
+        }
+        p.innerHTML = minute;   //把分钟*60赋值给p并显示秒
+        setTimeout(function step() {    //设置定时器
+            minute--;                       //每隔一定时间minute-1
+            p.innerHTML = minute;           //再把minute赋值给p
+            setTimeout(function () {    //设置一个延时的定时器,保证结束弹框在minute==0之后弹出
+                if (minute == 0) {
+                    alert("计时结束")
+                }
+            }, 3);
+            if (minute == 0) {      //minute == 0 时结束定时器内的函数
+                return true;
+            }
+            timer = setTimeout(step, 50)    //设置定时器引用自身函数
+
+        }, 50)
+
+    };
+
+    stop.onclick = function () {
+        clearInterval(timer);
+    }
+    //方法二:
+    //    var minute = prompt("请输入一个分钟数");
+    //    var second = 10;
+    //
+    //    var btnPause = document.getElementById('btnPause');
+    //    var btnCon = document.getElementById('btnCon');
+    //    var btnStop = document.getElementById('btnStop');
+    //    var btnAgain = document.getElementById('btnAgain');
+    //    var i;
+    //    function startCount() {
+    //        var txt1 = document.getElementById('txt1').value = minute - 1;
+    //        second -= 1;
+    //        var txt2 = document.getElementById('txt2').value = second;
+    //        i = setTimeout(startCount, 1000);
+    //        if (second != 0) {
+    //        } else {
+    //            minute = minute - 1;
+    //            setTimeout(function () {
+    //                if (minute == 0) {
+    //                    alert("计时结束");
+    //                    return true;
+    //                }
+    //            }, 3);
+    //
+    //            second = 10;
+    //        }
+    //    }
+    //
+    //    if (startCount()) {
+    //        clearTimeout(i);
+    //    }
+    //
+    //    btnPause.onclick = function () {
+    //        clearTimeout(i);
+    //    };
+    //    btnCon.onclick = function () {
+    //        startCount();
+    //    };
+    //    btnStop.onclick = function () {
+    //        clearTimeout(i);
+    //        var txt1 = document.getElementById('txt1').value = 0;
+    //        var txt2 = document.getElementById('txt2').value = 0;
+    //        alert("计时结束");
+    //    }
+
+
+</script>
+</body>
+</html>

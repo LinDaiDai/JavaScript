@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组中是否有相同项</title>
+</head>
+<body>
+    <script>
+        //分析:用arr的每一项和这一项后面的所有项进行遍历,有相同项的删除
+        function noRepeat(arr) {
+            for(var i=0;i<arr.length;i++){	//对arr中的每一个元素进行遍历
+                for(var j=i+1;j<arr.length;j++){//对除了arr[i]这一项的之后的所有元素遍历;
+                    if(arr[i]==arr[j]){		//若这一项(arr[i])和它的下一项(arr[j])相等;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

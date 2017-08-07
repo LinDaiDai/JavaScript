@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test1</title>
+    <style>
+        .container{
+            position: relative;
+            width: 770px;
+            height: 600px;
+            top: 20px;
+            left: 100px;
+            background: #e0e0e0;
+            border: 1px solid #e0e0e0;
+            box-sizing: border-box;
+        }
+        .container .ul{
+            width: 750px;
+            height: 172px;
+            list-style: none;
+            margin: 5px 10px ;
+            padding: 0;
+        }
+        .container .ul > li{
+            width: 170px;
+            height: 170px;
+            border: 1px solid blue;
+            padding: 0;
+            float: left;
+            margin: 0 20px 0 0;
+        }
+        .big{
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            border: 2px solid #5E5E5E;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <ul class="ul">
+        <li><img src="img/shirt_1.jpg"></li>
+        <li><img src="img/shirt_2.jpg"></li>
+        <li><img src="img/shirt_3.jpg"></li>
+        <li style="margin-right: 0"><img src="img/shirt_4.jpg"></li>
+    </ul>
+    <div class="big"><img src="img/shirt_1_big.jpg"></div>
+    <div class="big"><img src="img/shirt_2_big.jpg"></div>
+    <div class="big"><img src="img/shirt_3_big.jpg"></div>
+    <div class="big"><img src="img/shirt_4_big.jpg"></div>
+</div>
+<script>
+    var container = document.querySelector('.container');
+    var lis = document.querySelectorAll('.container > .ul > li');
+    var bigLis = document.querySelectorAll('.container > .big');
+    var cLeft = container.offsetLeft;
+    var cTop = container.offsetTop;
+    var liW = lis[0].offsetWidth;
+    var liH = lis[0].offsetHeight;
+    for(let i=0;i<lis.length;i++){
+        lis[i].onmousemove=function (e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            var left = x - cLeft;
+            var top = y -cTop;
+            bigLis[i].style.display='block';
+            bigLis[i].style.left=left+'px';
+            bigLis[i].style.top=top+'px';
+        }
+        lis[i].onmouseout=function(){
+            bigLis[i].style.display='none';
+        }
+    }
+</script>
+</body>
+</html>
