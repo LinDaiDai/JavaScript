@@ -2,7 +2,8 @@
 
 ### 第一章: DOM2事件
 
-	#### 1.addEventListener()
+#### 1.addEventListener()
+
 
 > ​	语法:	element.addEventListener( event,function(){ },boolean);
 
@@ -278,3 +279,48 @@ btn.onclick = function (e){
 > 当前光标相对于浏览器浏览器窗口客户区域左上角的坐标(客户区域不包括状态栏、菜单栏等。)
 
 ![img3](https://github.com/LinDaiDai/JavaScript/blob/master/DomImg/img3.png?raw=true)
+=======
+![img3](E:\JavaScript\DomImg\img3.png)
+
+
+
+### 第四章: 事件代理(委托)
+
+> ​	事件委托的原理：
+
+ 假设现在要处理多个具有并列关系元素的click事件，当我点击这些元素中的任何一个元素，则事件一定会通过冒泡的方式，冒泡到他的上层的父节点元素然后一直冒到window，所以这个时候我们就可以在他的上层元素中添加事件处理程序，来统一处理这些事件，在处理的过程中可以通过获取target的id来知道是点击的哪个具体的元素。这种方式就称之为事件委托。
+
+```javascript
+<ul id="item">
+    <li id="item1">1</li>
+    <li id="item2">2</li>
+    <li id="item3">3</li>
+    <li id="item4">4</li>
+</ul>
+<script>
+    item.onclick=function(e){
+        switch (e.target.id){						//使用target来获取目标元素,也就是点击的那个li 并通过id来判断
+            case "item1":
+                console.log("你点击了第一个li");
+                break;
+            case "item2":
+                console.log("你点击了第二个li");
+                break;
+            case "item3":
+                console.log("你点击了第三个li");
+                break;
+            case "item4":
+                console.log("你点击了第四个li");
+                break;
+        }
+    }
+</script>
+```
+
+> 注:
+>
+> 1. 完全可以考虑给document添加一个事件处理程序，用来处理页面上发生的某种特定类型的事件。
+> 2. 比较适合事件委托的事件：click 、 mousedown 、 mouseup 、 keydown 、 keyup 和 keypress;
+
+2222
+
