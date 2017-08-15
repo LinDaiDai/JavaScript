@@ -28,7 +28,20 @@
 
  	有两种事件流：冒泡流和捕获流	(还有一个DOM事件流 )
 
-	##### 	1. 冒泡流
+```javascript
+	#1. 冒泡流	
+例1:
+<div class="aaron2">
+    <p>鼠标离开此区域触发mouseleave事件</p>
+</div>
+
+如果在p元素与div元素都绑定mouseover事件，鼠标在离开p元素，但是没有离开div元素的时候，触发的结果:
+	p元素响应事件
+	div元素响应事件
+	
+#这里的问题是div为什么会被触发？ 原因就是事件冒泡的问题，p元素触发了mouseover，他会一直往上找父元素上的mouseover事件，如果父元素有mouseover事件就会被触发	
+mouseenter事件只会在绑定它的元素上被调用，而不会在后代节点上被触发(不冒泡)
+```
 
 ​		微软认为:
 
@@ -359,6 +372,8 @@ var scrollTop = document.body.scrollTop || document.documentElement.scrollTop; �
 
 - onmouseenter：这个事件不冒泡。效果同onmouseover
 - onmouseleave ：这个事件不冒泡，效果同onmouseout
+
+
 
 
 

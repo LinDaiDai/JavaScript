@@ -205,6 +205,18 @@ var d = new Date();
 d.setTime(8998778999)
 ```
 
+```
+定义一个函数计算你活了多少天
+function howD(birthday){
+            var nowTime = new Date();
+            var d = nowTime.getTime()-birthday.getTime();
+            return Math.floor(d/(24*3600*1000));
+        }
+        var birthday = prompt("请输入您的生日,生日格式为 年/月/日");
+        birthday = new Date(birthday);
+        document.write(howD(birthday));
+```
+
 #### 2.getFullYear( )
 
 ​	获取年份
