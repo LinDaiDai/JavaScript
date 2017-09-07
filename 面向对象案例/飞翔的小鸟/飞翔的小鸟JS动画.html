@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>飞翔的小鸟</title>
+    <style>
+        #box{
+            width: 200px;
+            height: 126px;
+            background: url("img/birdie.jpg") 0 0 no-repeat;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script type="text/javascript" src="Easing.js"></script>
+    <script type="text/javascript" src="my_animation2.js"></script>
+    <script>
+        var j = 1;
+        var imgSrc = ['img/birdie.jpg','img/birdie2.png'];
+        var maxLeft = document.body.offsetWidth - box.offsetWidth;
+        var animation1 = new Animation(
+            [200,200],
+            [Easing.linear,Easing.linear],
+            [function () {
+                box.style.backgroundPosition = `${0}px`;
+            },function () {
+                box.style.backgroundPosition = `${-200}px`;
+            }]
+        );
+        var animation2 = new Animation(
+            [8000,8000],
+            [Easing.linear,Easing.linear],
+            [function (e) {
+                box.style.transform = `translateX(${maxLeft*e}px)`;
+            },function (e) {
+                box.style.transform = `translateX(${maxLeft*(1-e)}px)`;
+            }]
+        );
+        animation1.start(Infinity);
+        animation2.start(Infinity);
+        setInterval(function step() {
+            box.style.background=`url(${imgSrc[j++ %2]})`;
+        },8000)
+    </script>
+</body>
+</html>

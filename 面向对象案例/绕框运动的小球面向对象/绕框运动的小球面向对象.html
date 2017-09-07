@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绕框运动的小球面向对象</title>
+    <style>
+        #father{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 1px solid pink;
+            left: 300px;
+        }
+        #son{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="father">
+        <div id="son"></div>
+    </div>
+<script type="text/javascript" src="Easing.js"></script>
+<script type="text/javascript" src="my_animation2.js"></script>
+<script>
+    var son = document.querySelector('#son');
+    var animator = new Animation(
+        [1000,2000,1000,2000],
+        [Easing.linear,Easing.linear,Easing.linear,Easing.linear],
+        [function (e) {
+            son.style.transform=`translate(${180*e}px,${0}px)`;
+        },function (e) {
+            son.style.transform=`translate(${180}px,${180*e}px)`;
+        },function (e) {
+            son.style.transform = `translate(${180*(1-e)}px,${180}px)`;
+        },function (e) {
+            son.style.transform = `translate(${0}px,${180*(1-e)}px)`;
+        }]
+    );
+    animator.start(3);
+</script>
+</body>
+</html>

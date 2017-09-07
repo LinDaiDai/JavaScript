@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>飞翔的小鸟定时器</title>
+    <style>
+        #box{
+            width: 200px;
+            height: 126px;
+            background: url("img/birdie.jpg") 0 0 no-repeat;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+    var i = 0;
+    var j = 1;
+    var direction = 1;
+    var imgSrc = ['img/birdie.jpg','img/birdie2.png'];
+    var maxLeft = document.body.offsetWidth - box.offsetWidth;
+            setInterval(function(){
+              box.style.backgroundPosition = `${-i*200}px`;
+              var left = box.offsetLeft+30*direction;
+              box.style.left = left+'px';
+              i++;
+              if(i==2){
+                  i=0;
+              }
+              if(box.offsetLeft >=maxLeft||box.offsetLeft<=0){
+                  console.log(direction);
+                  direction*=-1;
+                  box.style.background=`url(${imgSrc[j++ %2]})`;
+              }
+            },100)
+</script>
+</body>
+</html>
