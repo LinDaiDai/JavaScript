@@ -18,6 +18,8 @@ C/s:  client /server
 
 #### HTTP协议
 
+(Nodejs中有详细的介绍)
+
 ​	俩部分:
 
 ​		1.请求协议
