@@ -12,7 +12,7 @@
 
 ### 2.1 $timeout
 
-用法和$scope一样
+用法和$scope一样.
 
 ```javascript
 let app = angular.module('MyApp',[])
