@@ -5,14 +5,13 @@
 
 
 
-
 ## 第二章:定时器服务
 
 
 
 ### 2.1 $timeout
 
-用法和$scope一样.
+用法和$scope一样..
 
 ```javascript
 let app = angular.module('MyApp',[])
