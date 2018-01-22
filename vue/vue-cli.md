@@ -19,12 +19,12 @@ module.exports = {
     path: config.build.assetsRoot,
     filename: '[name].js',      //打包以后输出的文件名称,(输出配置)
   },
-  module: {					//解析模块的一些规则
+  module: {					//用以解析模块的一些规则
     rules: {
       
     }
   },
-  resolve: {				//读文件的一些配置
+  resolve: {				//读取文件的一些配置
     
   }
 ```
