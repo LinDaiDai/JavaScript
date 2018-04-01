@@ -42,7 +42,7 @@ let app = angular.module('MyApp',[])
 
 **注:使用简单的get请求,webStrom自带的服务器就可以实现,但是post请求要用服务器**
 
-使用方式:
+http服务的使用方式:
 
 ```
 $http.get('/someUrl').success(successCallback).error(successCallback);
