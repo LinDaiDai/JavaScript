@@ -155,7 +155,7 @@ new Vue({
 
 ### 2.2 案例1:
 
-1.在vue文件夹目录下,执行
+1.在vue文件夹的目录下,执行
 
 ```
 $ vue init webpack route_demo
