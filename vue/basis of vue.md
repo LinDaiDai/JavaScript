@@ -11,7 +11,7 @@
 ```
 1. 全局安装 vue-cli
 $ npm install  vue-cli -g
-2. 创建一个基于 webpack 模板的新项目
+2. 需要创建一个基于 webpack 模板的新项目
 $ vue init webpack my-project	//1 vue指令, 2 初始化 3 webpack 4 项目名
 3. 安装依赖，走你
 $ cd my-project	//进入到当前目录下
