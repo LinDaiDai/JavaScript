@@ -140,9 +140,9 @@ js对象，数字，字符串，布尔值可以拥有自己的方法，只有nul
 ```
 isNaN();
 在参数为NaN 或 非数字(如字符串对象) 则返回true
-isNaN(JSON.stringify({label: 1}));
-
-isFinite();
+isNaN(JSON.stringify({label: 1})); // true
+JSON.stringify({label: 1}) == NaN // false 
+isFinite();用于检查其参数是否是无穷大
 在参数不是NaN Infinity 或 -Infinity 的时候返回true
 
 
@@ -166,7 +166,7 @@ var x = .3 - .2; 30美分-20美分
 var y = .2 - .1;
 x === y; //false 
 x === .1; //false
-y === .2; //true
+y === .1; //true
 
 在js中
 0.3 - 0.2 = 0.09999999999999998
