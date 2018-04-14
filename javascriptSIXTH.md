@@ -286,6 +286,12 @@ Object(3); // new Number(3)
 
 **除了null 和undefined 之外的任何值都具有toString()方法**
 
+```
+({x: 1, y: 2}).toString(); // => "[object Object]"
+```
+
+
+
 toString()和String()通常返回结果都一样，但是因为试图将null转换为对象都会抛出一个类型错误
 
 ```
