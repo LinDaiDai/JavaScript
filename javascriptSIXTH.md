@@ -326,7 +326,7 @@ x + ""; //等价于 String(x)
 
 number类定义的toString()方法可以接收表示转换基数的可选参数，若不指定参数，则默认为十进制
 
-```
+```javascript
 var n = 17;
 var a = n.toString(2); // 转换为 "10001"
 var b = "0" + n.toSting(8); // 转换为 "021"
@@ -335,7 +335,7 @@ var c = "0x" + n.toString(16); // 转换为 "0x11"
 
 其它类定义的toString()方法
 
-```
+```javascript
 [1,2,3].toString();  // "1,2,3";
 (function(x) { f(x); }).toString();  // "function(x) { \n f(x); \n }"
 /\d+/g.toString();  // "/\\d+/g"
@@ -350,7 +350,7 @@ new Date().toString(); //  "Thu Apr 12 2018 23:07:12 GMT+0800 (中国标准时�
 
 parseInt() 和 parseFloat()
 
-```
+```javascript
 parseInt('.1'); // NaN
 parseInt('0.1); // 0
 parseFloat('.1'); // 0.1
@@ -367,7 +367,7 @@ parseInt() 也可以指定基数
 
 都可以指定基数
 
-```
+```javascript
 parseInt("11", 2); // 3
 parseInt(11, 2); // 3
 parseInt("ff", 16);  // 255(15 * 16 + 15); 若是不传第二个参数，则是NaN,但若是0x开头则会解析为255
@@ -375,6 +375,75 @@ parseInt("ff", 16);  // 255(15 * 16 + 15); 若是不传第二个参数，则是N
 ```
 
 
+
+#### 3.8作为属性的变量
+
+当声明一个JS全局变量时，实际上是定义了全局对象的一个属性；
+
+使用`var `声明变量，创建的这个属性是不可配置的，也就是无法通过`delete`运算符来删除它。
+
+非严格模式下，若给没有通过`var`声明的变量赋值的话，js会自动创建一个全局变量，且这个变量是可配置的，可以通过`delete`删除的。
+
+```javascript
+        var truevar = 1; // var声明
+        fakevar1 = 2;	// 没有声明
+        this.fakever2 = 3; //同上
+        
+        delete truevar; // 不可删除
+        delete fakevar1; // 可以删除
+        console.log(truevar); // 1
+        console.log(fakevar1); // Uncaught ReferenceError: fakevar1 is not defined
+
+```
+
+**全局变量是全局对象的一个属性**
+
+
+
+#### 3.9作用域链
+
+```javascript
+各种情况下的作用域链
+
+js最顶层代码中
+	由一个全局对象组成
+
+不包含嵌套的函数体中
+	作用域链中有两个对象：
+	1.定义函数参数和局部变量的对象
+	2.全局对象
+
+嵌套的函数体中
+	作用域链上至少有3个对象
+	
+```
+
+
+
+```
+定义一个函数：实际上是保存一个作用域链
+调用这个函数：
+			1.创建一个新的对象来存储局部变量
+			2.将这个对象添加至保存的那个作用域链中
+			3.同时创建一个新的更长的表示函数调用作用域的“链”。
+```
+
+
+
+### 第四章
+
+#### 4.1对象创建表达式
+
+使用`new`构造函数创建对象时，若是对象创建表达式不需要传参数时可以省略()
+
+```
+function Animation() {
+  this.name = 'wang'
+}
+
+var an1 = new Animation;
+console.log(an1); // Animation {name: 'wang'}
+```
 
 
 
