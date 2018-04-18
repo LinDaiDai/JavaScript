@@ -376,6 +376,14 @@ parseInt("ff", 16);  // 255(15 * 16 + 15); 若是不传第二个参数，则是N
 
 
 
+
+
+
+
+
+
+
+
 #### 3.8作为属性的变量
 
 当声明一个JS全局变量时，实际上是定义了全局对象的一个属性；
@@ -447,15 +455,107 @@ console.log(an1); // Animation {name: 'wang'}
 
 
 
+#### 4.2表达式和运算符
+
+几种加号的转换
+
+```
+1 + {}; // "1[object object]"  转换为字符串后相加
+true + true; // 2 转换为数字后相加
+
+2 + null; // 2  null转换为数字0后相加
+2 + undefined; // NaN  undefined转换为NaN后相加	
+
+相加顺序
+1 + 2 + ' string'; // "3 string"
+1 + (2 + ' string'); // "12 string"
+```
 
 
 
+一元运算符
+
+```
++号
+即为一元也为二元
+一元时把操作数转换为数字（或NaN）
+如
+var num = + "1"; // 1
+var und =  +undefined; // NaN	
+
+-号
+一元时把操作数转换为数字，然后改变运算结果的符号
+var num = - "1"; // -1
+
+++
+将操作数转换为数字然后+1
+var num  = ++"1"; // 2
+var num = "1"++; // 1
+```
 
 
 
+**比较运算符**
+
+所有大写的ASCII字母都小于小写的
+
+```
+Zoo < aadrvark; // true
+```
+
+**计算时数字转字符串，比较时字符串转数字**
+
+```
+1 + "2"; // 12  数字转字符串
+3 > "11"; // false 字符串转数字  
+"3" > "11"; // true 字符串比较
+"one" > 3; // false 字符串转数字为NaN
+"one" < 3; // false
+```
+
+**当其中一个操作数为NaN时，所有的比较结果都返回false**
 
 
 
+in运算符
+
+
+
+```
+var obj = {x: 1, y: 2}; // 定义对象
+"x" in obj; // true
+"z" in obj; // false
+"toString" in obj; // true 对象继承了toString()方法
+
+
+var data = [7,8,9];
+'0' in data; // true  数组包含元素"0"
+1 in data; // true  转换为字符串"1"
+3 in data; // false  没有索引为3的元素
+7 in data; // false
+```
+
+
+
+instanceof运算符
+
+```
+左侧为一个对象，右侧为标识对象的类
+
+所有的对象都是object的实例
+
+若左侧不是对象，则为false,
+若右侧不是一个函数，则抛出一个类型错误异常
+```
+
+
+
+&&符可以用于“短路”
+
+```
+if (a == b) stop(); // 等价于
+(a == b) && stop();  // 只有a==b才会执行stop()函数
+```
 
 
 
