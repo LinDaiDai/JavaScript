@@ -559,6 +559,22 @@ if (a == b) stop(); // 等价于
 
 
 
+delete 运算符
+
+删除对象属性或者数组元素
+
+```
+var obj = {x: 1, y: 2}
+delete obj.x
+x in obj; //false
+
+var a = [1,2,3]
+2 in a; //true
+delete a[2];
+2 in a; //false
+a.length; // 3
+```
+
 
 
 
