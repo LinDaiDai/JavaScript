@@ -95,7 +95,7 @@ x; ++y
 
 javascript解释器有自己的内存管理机制 -》对内存进行垃圾回收
 
-当不在有任何引用指向这个对象，解释器会自动回收它所占用的内存资源
+当不再有任何引用指向这个对象，解释器会自动回收它所占用的内存资源
 
 
 
@@ -578,6 +578,402 @@ a.length; // 3
 
 
 
+
+### 第五章
+
+#### 5.1 for in 和 for of
+
+```
+for in 遍历的是对象的键，数组的下标
+遍历的顺序按照属性定义的先后顺序
+        var obj = {x: 1, y: 2, z: 3};
+        var arr = [1, 2, 3];
+        for (o in obj) console.log(o); // x, y, z
+        for (i in arr) console.log(i); // 0, 1, 2
+        
+利用for in 获取对象的所有键
+var arr = [], i = 0;
+for (arr[i++] in obj) /* empty */;
+// arr = ["x", "y", "z"];
+
+for in 循环并不会遍历对象的所有属性，只有可枚举的属性才会遍历到
+```
+
+
+
+#### 5.2 throw语句
+
+异常：当发生了某种异常情况或是错误时产生的一个信号。
+
+js中可以使用throw语句显示地抛出异常。
+
+```
+        function test(param) {
+            if (param < 0) throw new Error('输入的不能是负数');
+            console.log(param);
+        }
+        test(-1);
+        console.log('执行');
+        
+        // 浏览器控制台只会抛出一个异常,不会执行之后的代码
+        // Uncaught Error: 输入的不能是负数
+```
+
+
+
+#### 5.3 try/catch/finally
+
+
+
+```
+try:
+	定义了需要处理的异常所在的代码
+catch：
+	当try中的代码发生异常时，执行此处代码，可以使用e(或其它命名的参数)来捕获错误
+finally:
+	清理代码，不管try中是否有异常，都会执行，
+
+```
+
+**catch和finally都是可选的**
+
+使用catch
+
+```
+        try{
+            console.log('try');
+            var o = undefined.toString();
+        } catch(e) {
+            console.log('catch');
+            if (e) {
+                console.log(e);
+            }
+        } finally {
+            console.log('finally');
+        }
+        console.log('last');
+        
+        // try
+        // catch
+        // TypeError: Cannot read property 'toString' of undefined // 打印出错误切会执行之后的代码
+        // finally
+        // last
+```
+
+不使用catch
+
+```
+        try{
+            console.log('try');
+            var o = undefined.toString();
+        } finally {
+            console.log('finally');
+        }
+        console.log('last');
+        
+        // try
+        // finally
+        // Uncaught TypeError: Cannot read property 'toString' of undefined //报红色错，不执行后面的代码
+```
+
+
+
+
+
+#### 5.4 with
+
+作用域链实际是是一个按序检索的列表，通过它可以进行变量名解析，而with用于临时扩展作用域链
+
+```
+with(object)
+statement
+
+将object添加至作用域的头部，软化执行statment，最后把作用域链恢复到原始状态。
+```
+
+
+
+在严格模式下，禁止使用with,非严格模式下，也要避免使用
+
+
+
+```
+    <form>
+        <input type="text" name="name">
+        <input type="text" name="add">
+        <input type="text" name="sex">
+    </form>
+    <script>
+    	document.forms[0].name.value = '王';
+    	document.forms[0].add.value = '地铁';
+    	document.forms[0].sex.value = '男';
+    	
+    	// 等同于
+    	with(document.forms[0]) {
+            name.value = '王';
+            add.value = '地铁';
+            sex.value = '男'
+        }
+        // 等同于
+        var f = document.forms[0];
+        f.name.value = '王';
+        f.add.value = '地铁';
+        f.sex.value = '男'
+    </script>
+    
+    
+```
+
+
+
+**只有在查找标识符的时候才会用到作用域链，创建新的变量的时候不适用它，如**
+
+
+
+#### 5.5 use strict
+
+```
+        var o = {x: 1};
+        with(o) x = 2;
+
+        console.log(o); // {x: 2}
+        
+        var o = {x: 1};
+        with(o) y = 2;
+
+        console.log(o);// {x: 1}
+        console.log(y);/// 2
+        //若是o中存在x,那么就给x赋值1，若是o中不存在y,则这段代码就等于y=2,创建了一个全局变量y
+```
+
+
+
+#### 4.7 use strict
+
+严格与非严格的区别，最重要的三点：
+
+```
+1.严格模式下不能使用with，否则会报错
+        "use strict"
+        with (document.forms[0]) {
+            name.value = '王';
+            add.value = '地铁';
+            sex.value = '男'
+        }
+        // Uncaught SyntaxError: Strict mode code may not include a with statement
+      
+2.严格模式下，所有的变量都要先声明
+	     x = 1;
+         console.log(x);
+		// Uncaught ReferenceError: x is not defined
+		
+3.严格模式下，函数内部的this值是undefined,而非严格模式下是全局对象
+        (function test() {
+            "use strict"
+            console.log(this);
+        })();
+        // undefined
+```
+
+
+
+### 第六章
+
+#### 6.1原型
+
+```
+通过new Object()创建的对象的对象继承自Object.prototype
+通过new Array()创建的对象的对象继承自Array.prototype也继承自Object.prototype
+通过new Date()创建的对象的对象继承自Date.prototype也继承自Object.prototype
+```
+
+没有原型的对象不多，Object.prototype就是其中一个，它不继承任何属性。
+
+
+
+#### 6.2 Object.create()
+
+Object.create()，创建一个新对象，第一个参数为这个对象的原型，第二个为可选参数，用以对这个对象的属性进一步的描述
+
+它是一个静态函数，不是提供给某个对象调用的方法。
+
+```
+// 使用时，只需要传入所需的原型对象即可
+var o1 = Object.create({x: 1, y: 2}); // o1继承了属性x和y
+
+若参数传入的是null，则创建的这个对象没有原型，不会继承任何东西，如toString()都没有
+若参数传入的是Object.prototype,则创建的为普通的对象(和{}或new Object()一样)
+var o2 = Object.create(null);
+o2['x'] = 1;
+console.log(o2.toString());
+// Uncaught TypeError: o2.toString is not a function
+
+var o3 = Object.create(Object.prototype);
+o3['x'] = '2';
+console.log(o3.toString());
+// [object object]
+```
+
+
+
+**通过原型继承创建一个新对象**
+
+```
+        function createObject(p) {
+            if (p == null) throw TypeError();
+            if (Object.create) 
+                return Object.create(p);
+            var t = typeof p;
+            if (t !== "object" && t !== 'function') throw TypeError();
+            function F() {};
+            F.prototype = p;
+            return new F();
+        }
+        var f = createObject({'x': 1, y: 2});
+        console.log(f); // {}   // prototype 为{'x': 1, 'y': 2}
+        console.log(f.x); // 1
+        
+        若是传入的为null则抛出异常
+```
+
+
+
+#### 6.4 属性的查询和设置
+
+```
+通过.和[]两种方式来获取属性的值
+```
+
+在ECMAScript3中，.运算符后面的标识符不能为保留字，但在ECMScript5中可以
+
+而[]运算符都可以使用保留字
+
+若是键名有空格或者-都必须用[]
+
+```
+        var o = {};
+        o.class = '1';
+        o.for = '2';
+        console.log(o); // {class: '1', for: '2'}
+        
+        o['font size'] = '3';
+        o['font-weight'] = '4';
+```
+
+
+
+**可以利用[]动态的给对象中添加属性**
+
+```
+function addKey(object, key, value) {
+  object[key] = value
+}
+```
+
+
+
+**查询一个不存在的属性不会报错，如果试图查询这个不存在的对象的属性就会报错**，如
+
+```
+var o = {};
+console.log(o.x); // undefined
+console.log(o.x.length); // 报错
+```
+
+所以通常可以这样避免报错
+
+```
+if (o && o['x'] && o['x'.length]) console.log(o['x'].length);
+```
+
+
+
+**内置构造函数的原型是只读的**
+
+在非严格模式下，不会成功，但也不会报错
+
+```
+var o = {x: 1};
+Object.prototype = o; // 赋值失败，但是不会报错
+console.log(Object); // ƒ Object() { [native code] }
+```
+
+在ECMAScript5的严格模式下，会报错
+
+```
+        "use strict"
+        var o = {x: 1};
+        Object.prototype = o; // 赋值失败，但是会报错
+        console.log(Object);
+
+// Uncaught TypeError: Cannot assign to read only property 'prototype' of function 'function Object() { [native code] }'
+```
+
+
+
+**几种给对象设置属性失败的情况**
+
+```
+o中的属性p是只读的(defineProperty()方法中有一个例外，可以对可配置的只读属性重新赋值)
+
+o中的属性p是继承属性，且它是只读的，也不能通过同名自有属性覆盖只读的继承属性
+
+o为可拓展，且o中没有p属性，并且没有setter方法可供调用，则p会被添加至o中；
+o为不可拓展，那么o中不能定义新属性
+```
+
+
+
+
+
+#### 6.5 delete
+
+delete 只能删除自有属性，不能删除继承属性
+
+
+
+```
+        var a = {p: {x: 1}};
+        var b = a.p;
+        console.log(b.x); // 1
+        
+        delete a.p;
+        console.log(b.x); // 还是1
+        
+```
+
+
+
+**delete删除成功或没有任何副作用(如删除不存在的属性)时，返回true**
+
+**若delete后不是一个属性访问表达式，也是返回true**
+
+```
+        // 以下返回结果全是true
+        var o = {x: 1};
+        console.log(delete o.x); // 删除x，返回true
+        console.log(delete o.x); // o中没有x属性，返回true
+        console.log(delete o.toString); // toString是继承来的，返回true
+        console.log(delete 1); // 无意义，返回true
+```
+
+
+
+**delete不能删除那些可配置性为false的属性**
+
+在严格模式下，删除一个不可配置属性会报一个类型错误，
+
+非严格模式下，返回false
+
+```
+delete Object.prototype; // 不能删除，属性是不可配置的
+var x = 1; // 声明一个全局变量x
+delete this.x; // 不能删除这个属性
+function f(){}; // 声明一个全局函数
+delete this.f; // 不能删除
+
+若是x不是用var声明的就可以删除
+```
 
 
 
