@@ -295,11 +295,630 @@ module.exports = {
 
 
 
-#### 3.3 使用Loaders
+#### 3.3 Loaders简介
 
 loaders是webpack提供的另一强大功能。通过使用不同的`loader`，`webpack`有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如说分析转换scss为css，或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件，对React的开发而言，合适的Loaders可以把React的中用到的JSX文件转换为JS文件。
 
 Loaders需要单独安装并且需要在`webpack.config.js`中的`modules`关键字下进行配置，Loaders的配置包括以下几方面：
+
+`test`：一个用以匹配loaders所处理文件的拓展名的正则表达式（必须）
+
+`loader`：loader的名称（必须）
+
+`include/exclude`:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
+
+`query`：为loaders提供额外的设置选项（可选）
+
+
+
+在配置Loaders之前，我们将Greeter.js中的文本内容放在一个单独的json中，然后进行引用
+
+在app下创建config.json
+
+```
+{
+    "greetText": "This is my first webpack111"
+}
+```
+
+修改Greeter.js
+
+```
+var config = require('./config.json');
+module.exports = () => {
+    var greet = document.createElement('div');
+    greet.textContent = config.greetText;
+    return greet;
+};
+```
+
+> **注** 由于`webpack3.*/webpack2.*`已经内置可处理JSON文件，这里我们无需再添加`webpack1.*`需要的`json-loader`。在看如何具体使用loader之前我们先看看Babel是什么？
+
+
+
+
+
+
+
+#### 3.4 Babel
+
+Babel其实是一个编译JavaScript的平台，它可以编译代码帮你达到以下目的：
+
+- 让你能使用最新的JavaScript代码（ES6，ES7...），而不用管新标准是否被当前使用的浏览器完全支持；
+- 让你能使用基于JavaScript进行了拓展的语言，比如React的JSX；
+
+Babel其实是几个模块化的包，其核心功能位于称为`babel-core`的npm包中，webpack可以把其不同的包整合在一起使用，对于每一个你需要的功能或拓展，你都需要安装单独的包（用得最多的是解析Es6的`babel-env-preset`包和解析JSX的`babel-preset-react`包）。
+
+
+
+可以进行一次性的安装：
+
+```
+// npm一次性安装多个依赖模块，模块之间用空格隔开
+npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
+```
+
+
+
+接下来需要在webpack.config.js中配置Babel的方法
+
+```
+module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            "env", "react"
+                        ]
+                    }
+                },
+                exclude: /node_modules/
+            }
+        ]
+    }
+```
+
+
+
+**完成以上步骤之后，你的程序已经可以使用最新的JS语法和JSX语法了**
+
+
+
+例如此处，以ES6和JSX为例
+
+首先安装React和React-DOM
+
+```
+npm install --save react react-dom
+```
+
+
+
+在使用ES6和React的语法重新编写Greeter.js
+
+```
+import React, {Component} from 'react'
+import config from './config.json';
+
+class Greeter extends Component{
+  render() {
+    return (
+      <div>
+        {config.greetText}
+      </div>
+    );
+  }
+}
+
+export default Greeter
+```
+
+修改`main.js`如下，使用ES6的模块定义和渲染Greeter模块
+
+```
+import React from 'react';
+import {render} from 'react-dom';
+import Greeter from './Greeter';
+
+render(<Greeter />, document.getElementById('root'));
+```
+
+重新使用`npm run server`打包，打开localhost:8080可以看到和前面一样的效果
+
+这就说明react和es6被正常打包了。
+
+#### 3.5 .babelrc文件
+
+在上面的例子中，我们是将babel的配置项直接写在了webpack.config.js中进行配置的，在实际使用中，开发者喜欢将babel的配置选项放在一个单独的文件`.babelrc`中进行配置。
+
+因此现在我们就提取出相关部分，分两个配置文件进行配置（webpack会自动调用`.babelrc`里的babel配置选项），如下：
+
+webpack.config.js
+
+```
+module.exports = {
+    devtool: 'eval-source-map',
+    entry: __dirname + "/app/main.js",
+    output: {
+        path: __dirname + "/public",
+        filename: "bundle.js"
+    },
+    devServer: {
+        contentBase: "./public",//本地服务器所加载的页面所在的目录
+        historyApiFallback: true,//不跳转
+        inline: true,//实时刷新
+        port: 8080  
+    },
+    module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader"
+                },
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
+```
+
+`.babelrc`文件
+
+```
+{
+    "presets": [
+        "env", "react"
+    ]
+}
+```
+
+
+
+#### 3.6 CSS
+
+可以看到，上面介绍的Babel实际上的作用是使得开发者能够使用最新的JS写法和基于JS的拓展语言
+
+经常说，webpack的优点就是，一切皆模块
+
+把所有的文件都当作模块来处理，
+
+那么webpack中是通过什么来处理css和fonts以及各种图片的呢。
+
+webpack提供两个工具处理样式表，`css-loader` 和 `style-loader`
+
+二者处理的任务不同：
+
+`css-loader`使你能够使用类似`@import` 和 `url(...)`的方法实现 `require()`的功能,
+
+`style-loader`将所有的计算后的样式加入页面中，二者组合在一起使你能够把样式表嵌入webpack打包后的JS文件中
+
+
+
+安装css-loader和style-loader
+
+使用指令
+
+```
+npm i --save-dev style-loader css-loader
+```
+
+
+
+我们在使用Balel时是要在webapck.config.js中进行配置的，而css也是
+
+```
+module.exports = {
+
+   ...
+    module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader"
+                },
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader"
+                    }
+                ]
+            }
+        ]
+    }
+};
+```
+
+
+
+接下来，在app下创建一个main.css
+
+```
+html {
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul {
+  margin: 0;
+  padding: 0;
+}
+div{
+  color: red;
+}
+```
+
+
+
+此处，我就将main.css导入main.js
+
+```
+import React from 'react';
+import {render} from 'react-dom';
+import Greeter from './Greeter';
+
+import './main.css';//使用require导入css文件
+
+render(<Greeter />, document.getElementById('root'));
+```
+
+
+
+再次使用指令`npm run server`打开页面，可以看到字体颜色为红色
+
+
+
+> 通常情况下，css会和js打包到同一个文件中，并不会打包为一个单独的css文件，不过通过合适的配置webpack也可以把css打包为单独的文件的。
+
+
+
+> 上面的代码说明webpack是怎么把css当做模块看待的，咱们继续看一个更加真实的css模块实践。
+
+
+
+#### 3.7 CSS module
+
+模块化使得前端的开发更加简洁明了，被称为CSS module的技术意在把JS的模块化思想带入css中。
+
+Webpack对CSS模块化提供了非常好的支持，只需要在CSS loader中进行简单配置即可，
+
+然后就可以直接把CSS的类名传递到组件的代码中，这样做有效避免了全局污染。具体的代码如下
+
+```
+module.exports = {
+
+    ...
+
+    module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader"
+                },
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader",
+                        options: {
+                            modules: true, // 指定启用css modules
+                            localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+};
+```
+
+我们在app文件夹下创建一个`Greeter.css`文件来进行一下测试
+
+```
+.green{
+    color: green;
+}
+```
+
+修改Greeter.js
+
+```
+import React, {Component} from 'react'
+import config from './config.json';
+
+import style from './Greeter.css';
+
+class Greeter extends Component{
+  render() {
+    return (
+      <div className={style.green}>
+        {config.greetText}
+      </div>
+    );
+  }
+}
+
+export default Greeter
+```
+
+重新启动`npm run server`可以看到页面中的字变成了绿色
+
+
+
+#### 3.8 css预处理器
+
+`Sass` 和 `Less` 之类的预处理器是对原生CSS的拓展
+
+CSS预处理器可以这些特殊类型的语句转化为浏览器可识别的CSS语句
+
+几种常用的css预处理器
+
+```
+Less Loader
+Sass Loader
+Stylus Loader
+```
+
+不过其实也存在一个CSS的处理平台`-PostCSS`，它可以帮助你的CSS实现更多的功能，在其[官方文档](https://link.jianshu.com/?t=https://github.com/postcss/postcss)可了解更多相关知识。
+
+案例
+
+首先安装`postcss-loader` 和 `autoprefixer`（自动添加前缀的插件）
+
+```
+npm install --save-dev postcss-loader autoprefixer
+```
+
+接下来，在webpack配置文件中添加`postcss-loader`，在根目录新建`postcss.config.js`,并添加如下代码之后，重新使用`npm run server`打包时，你写的css会自动根据Can i use里的数据添加不同前缀了。
+
+webpack.config.js
+
+```
+module.exports = {
+    ...
+    module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader"
+                },
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader",
+                        options: {
+                            modules: true
+                        }
+                    }, {
+                        loader: "postcss-loader"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
+postcss.config.js
+
+```
+module.exports = {
+    plugins: [
+        require('autoprefixer')
+    ]
+}
+```
+
+
+
+以上谈论的Babel和处理CSS的PostCSS的基本用法，它们其实是俩个单独的平台，但是配合webpack就可以发挥很好的作用。
+
+
+
+#### 3.9 插件(Plugins)
+
+插件（Plugins）是用来拓展Webpack功能的，它们会在整个构建过程中生效，执行相关的任务。
+
+它和Loaders是俩样不同的东西
+
+Loaders是在打包构建过程中用来处理源文件的(sass,less,JSX)，一次处理一个文件
+
+插件是在整个构建过程中起作用，并不直接操作单个文件。
+
+
+
+**使用插件**
+
+1.使用npm安装它
+
+2.在webpack配置plugins关键字部分添加该插件的一个实例
+
+
+
+案例，在本项目中添加一个给打包后代码添加版权说明的插件
+
+记得在webpack.config.js中引入webpack
+
+```
+const webpack = require('webpack');
+module.exports = {
+    devtool: 'eval-source-map',
+    entry: __dirname + "/app/main.js",
+    output: {
+        path: __dirname + "/public",
+        filename: "bundle.js"
+    },
+    devServer: {
+        contentBase: "./public",//本地服务器所加载的页面所在的目录
+        historyApiFallback: true,//不跳转
+        inline: true,//实时刷新
+        port: 8080
+    },
+    module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader"
+                },
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader",
+                        options: {
+                            modules: true, // 指定启用css modules
+                            localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+                        }
+                    }, {
+                        loader: "postcss-loader"
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new webpack.BannerPlugin('王先生版权所有')
+    ],
+}
+```
+
+打包之后的bundle.js中就会出现这条注释
+
+![webpack4](D:\wenjian\javascript\JavaScript\webpackImg\webpack4.png)
+
+
+
+下面为几款常用的插件
+
+
+
+##### 1. HtmlWebpackPlugin
+
+这个插件的作用是依据一个简单的index.html模板，生成一个自动引用你打包后的JS文件的新的index.html。
+
+使用之后，你不需要自己手动创建index.html，它会自动生成一个bundle文件夹
+
+安装
+
+```
+npm install --save-dev html-webpack-plugin
+```
+
+
+
+在webpack.config.js中引入
+
+```
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+    devtool: 'eval-source-map',
+    entry: __dirname + "/app/main.js",
+    output: {
+        path: __dirname + "/build",
+        filename: "bundle.js"
+    },
+    devServer: {
+        contentBase: "./public",//本地服务器所加载的页面所在的目录
+        historyApiFallback: true,//不跳转
+        inline: true,//实时刷新
+        port: 8080
+    },
+    module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader"
+                },
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader",
+                        options: {
+                            modules: true, // 指定启用css modules
+                            localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+                        }
+                    }, {
+                        loader: "postcss-loader"
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new webpack.BannerPlugin('王先生版权所有'),
+        new HtmlWebpackPlugin({
+            template: __dirname + "/app/index.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+        })
+
+    ],
+}
+```
+
+此时可以删除public文件夹
+
+将webpack.config.js中的output的配置项改为build文件夹
+
+再次执行`npm start`你会发现，build文件夹下面生成了`bundle.js`和`index.html`。
+
+![webpack5](D:\wenjian\javascript\JavaScript\webpackImg\webpack5.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
