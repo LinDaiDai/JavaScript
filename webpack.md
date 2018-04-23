@@ -201,6 +201,176 @@ npm start
 
 
 
+#### 总结
+
+```
+1.只有各个文件夹,没有webpack.config.js配置项
+$ node_modules/.bin/webpack app/main.js public/bundle.js
+需要指定路径，指定打包的入口文件,和打包后存放的路径
+
+----->
+
+2.配置了webpack.config.js文件
+entry
+output
+指定了路径,打包后的存放路径
+$ node_modules/.bin/webpack
+
+------>
+
+3.配置引导任务执行，在package.json中的scripts项配置
+ "scripts": {
+    "start": "webpack"
+  }
+$ npm start
+
+------->
+
+4.配置devtool,在webpack打包时生成source maps方便调试
+在webpack.config.js中配置devtool
+devtool: 'eval-source-map'
+
+------->
+
+5.构建本地服务器,浏览器可以监听代码的修改,安装devserver
+   	1. $ npm i --save-dev webpack-dev-server
+	2. 配置webpack.config.js
+		devserver: {
+          contentBase: "./public",// 本地服务器所加载的页面所在的目录
+          historyApiFallback: true,// 不刷新
+          inline: true //实时刷新 
+		}
+	3. 在package.json中配置指令
+	"scripts": {
+      "server": "webpack-dev-server --open"
+	}
+终端使用指令
+$ npm run server 
+就会自动打包然后自动打开浏览器localhos:8080
+
+------->
+
+6.安装配置Babel,可以使用ES6和JSX语法
+  	1. $ npm i --save-dev babel-core babel-loader babel-preset-env babel-preset-react
+	2. 配置webpack.config.js
+		module: {
+        rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            "env", "react"
+                        ]
+                    }
+                },
+                exclude: /node_modules/
+            }
+        ]
+    }
+此时可以使用ES6和JSX语法
+
+------->
+
+7. 单独配置.babelrc,将babel的配置选项单独剥离出来
+	1. 去除webpack.config.js中的options选项
+	2.创建.babelrc文件,并写入
+		{
+  			"presets": ["react", "env"]
+		}
+
+------>
+
+8. 将css和fonts及图片也当成模块处理
+	1. 安装style-loader和css-loader
+		$ npm i --save-dev style-loader css-loader
+	2. webpack.config.js中配置module下的rules
+		{
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader"
+                    }
+                ]
+            }
+ 此时可以使用import "./main.css" require导入css文件
+ 
+ ------->
+ 
+9. 使用CSS module可以将CSS文件也模块化,所有的类名动画名默认都只作用于当前模块
+	在webpack.config.js中配置module下的rules下的css-loader
+	{
+      loader: "css-loader",
+      options: {
+        modules: true, // 指定启用css modules
+        localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+      }
+	}
+此时可以使用import styleName from './Greeter.css' 导入css文件
+通过 styleName.green 来设置类名
+
+------->
+
+10. 使用postcss-loader 和 autoprefixer 自动添加适应不同浏览器的CSS前缀
+	1. $ npm i --save-dev postcss-loader autoprefixer
+	2. webpack.config.js 添加loader
+	{
+		loader: "postcss-loader"
+	}
+	3. 创建postcss.config.js
+		module.exports = {
+          plugins: [
+            require('autoprefixer')
+          ]
+		}
+打包之后，css会自动添加适应不同浏览器的css前缀
+
+------>
+
+11. 添加版权声明插件
+	在webpack.config.js中引入webpack
+		cont webpack = require('webpack');
+		module.exports = {
+          ...
+          plugins: [
+            new webpack.BannerPlugin('王先生版权所有')
+          ]
+		}
+此时,	通过这个插件,打包后的js文件中有版权说明
+
+------>
+
+12. HtmlWebpackPlugin,使用此插件,依据一个简单的index.html模板,生成一个自动你引用你打包后的JS文件的新的	 index.html
+	1. $ npm i --save-dev html-webpack-plugin
+	2.编写一个index.html模板
+	2.webpack.config.js中配置
+		const HtmlWebpackPlugin = require('html-webpack-plugin');
+		module.exports = {
+		  output: {
+            path: __dirname + "/build",
+            filename: "bundle.js"
+		  }
+          ...
+          plugins: [
+            ...
+            new HtmlWebpackPlugin({
+              template: __dirname + "app/index.tmpl.html"
+            })
+          ]
+		}
+使用这个插件之后,可以不用自己手动创建public文件夹,打包完毕之后自动生成build文件里面为打包后的内容
+
+```
+
+
+
+
+
+
+
 ### 第三章 webpack的强大功能
 
 #### 3.1 生成Source Maps(调试)
@@ -685,6 +855,8 @@ Stylus Loader
 
 不过其实也存在一个CSS的处理平台`-PostCSS`，它可以帮助你的CSS实现更多的功能，在其[官方文档](https://link.jianshu.com/?t=https://github.com/postcss/postcss)可了解更多相关知识。
 
+**autoprefixer可以为css代码自动添加适应不同浏览器的CSS前缀。**
+
 案例
 
 首先安装`postcss-loader` 和 `autoprefixer`（自动添加前缀的插件）
@@ -759,11 +931,13 @@ Loaders是在打包构建过程中用来处理源文件的(sass,less,JSX)，一�
 
 **使用插件**
 
-1.使用npm安装它
+1.要使用某个插件的时候npm安装它
 
 2.在webpack配置plugins关键字部分添加该插件的一个实例
 
 
+
+##### 1. BannerPlugin
 
 案例，在本项目中添加一个给打包后代码添加版权说明的插件
 
@@ -827,11 +1001,11 @@ module.exports = {
 
 
 
-##### 1. HtmlWebpackPlugin
+##### 2. HtmlWebpackPlugin
 
 这个插件的作用是依据一个简单的index.html模板，生成一个自动引用你打包后的JS文件的新的index.html。
 
-使用之后，你不需要自己手动创建index.html，它会自动生成一个bundle文件夹
+使用之后，你不需要自己手动创建index.html，它会自动生成一个build文件夹
 
 安装
 
@@ -907,6 +1081,8 @@ module.exports = {
 
 
 
+
+##### 3. Hot Module Replacement
 
 
 
