@@ -748,8 +748,6 @@ statement
 
 
 
-#### 4.7 use strict
-
 严格与非严格的区别，最重要的三点：
 
 ```
@@ -1011,6 +1009,50 @@ var o = {'x': undefined};
 delete o.x;
 "x" in o; // false
 ```
+
+
+
+#### 6.7 可枚举属性
+
+```
+        var o = {'x': 1, 'y': 2};
+        
+        function keysName(o) { // 返回对象中所有可枚举属性的名字
+            if (typeof o !== "object") throw TypeError();
+            var res = [];
+            for (prop in o) {
+                if (o.hasOwnProperty(prop)) {
+                    res.push(prop);
+                }
+            }
+            return res;
+        }
+        
+        function keysProp(o) { // 返回对象中所有可枚举属性的值
+            if (typeof o !== "object") throw TypeError();
+            var res = [];
+            for (prop in o) {
+                if (o.hasOwnProperty(prop)) {
+                    res.push(o[prop]);
+                }
+            }
+            return res;
+        }
+        console.log(keysName(p)); // ["x", "y"]
+        console.log(Object.keys(p)); // ["x", "y"]
+        console.log(keysProp(p)); // [1, 2]
+        console.log(Object.getOwnPropertyNames(p)); // ["x", "y"]
+```
+
+js中提供的方法`Object.keys`返回一个数组，包含对象的所有可枚举属性的名；
+
+`Object.getOwnPropertyNames()`返回一个数组，包含对象的所有可枚举不可枚举属性的名；
+
+`Object.keys`类似于上面的`keysName()`
+
+
+
+
 
 
 
