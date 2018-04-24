@@ -972,8 +972,51 @@ delete this.x; // 不能删除这个属性
 function f(){}; // 声明一个全局函数
 delete this.f; // 不能删除
 
-若是x不是用var声明的就可以删除
+若x不是用var声明的就可以删除
+
+delete x; // 非严格模式下可以，严格模式下报错
+delete this.x; // 正常
 ```
+
+
+
+#### 6.6 检测属性
+
+js中的对象属性的检测有很多方法
+
+```
+var o = {"x": 1};
+
+1.in   对象的自有属性或者继承属性中包含的属性都可以
+"x" in o; // true
+"y" in o; // false
+"toString" in o; // true
+
+2.hasOwnPreperty()  对象的自有属性，不包括继承
+o.hasOwnPreperty("x"); // true
+o.hasOwnPreterty("toString"); // false
+
+3.propertyIsEnumerable()  对象的自有属性，且可枚举(一般对象的自有属性都是可枚举的)
+o.propertyIsEnumerable("x"); // true
+Object.prototype.propertyIsEnumerable("toSting"); // false toString为不可枚举
+
+4.使用 !==
+o.x !== undefined; // true
+o.toString !== undefined; // true
+```
+
+```
+var o = {'x': undefined};
+
+delete o.x;
+"x" in o; // false
+```
+
+
+
+
+
+
 
 
 
