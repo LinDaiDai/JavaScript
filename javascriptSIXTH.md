@@ -1052,9 +1052,104 @@ js中提供的方法`Object.keys`返回一个数组，包含对象的所有可�
 
 
 
+#### 6.8 属性的特性
+
+##### 1.getter和setter
+
+1.什么是getter，什么是setter？
+
+　　getter 是一种获得属性值的方法，setter是一种设置属性值的方法。
+
+​	对象中的普通属性为“数据属性”
+
+​	而通过getter 和 setter 定义的属性为 “存取器属性”
 
 
 
+2.怎么定义？
+
+　　有2种办法：
+
+- 在对象初始化的时候定义
+- 在对象定义后的时候定义
+
+```
+var obj = {
+		//demo1
+            val:100,
+            get getval(){
+                return this.val;
+            },
+            set setval(x){
+                this.val = x;
+            }
+        }
+
+        console.log(obj.getval); // 100
+        obj.setval = 101;
+        console.log(obj.getval); // 101
+
+        //demo2
+        
+        var obj2 = {
+
+            val:200
+        }
+
+        obj2.__defineGetter__('name',function(){return this.val});
+        obj2.__defineSetter__('name',function(name){this.val = name;})
+
+        console.log(obj2.name); // 200
+        obj2.name = 201;
+        console.log(obj2.name); // 201
+```
+
+- 使用get语法时，不能带参数；然而set必须有一个明确的参数。
+- 在对象字面量中,同一个属性不能有两个get,也不能既有get又有属性键值(不允许使用 { get x() { }, get x() { } } 和 { x: …, get x() { } } )
+- 在同一个对象中，不能为一个已有真实值的变量使用 set ，也不能为一个属性设置多个 set。 
+  ( { set x(v) { }, set x(v) { } } 和 { x: …, set x(v) { } } 是不允许的 )
+- get和set都能用delete方法删除
+
+
+
+##### 2. 对象中属性总结
+
+属性分为2种
+
+可以当成它们分别有 4 种特性
+
+1.数据属性
+
+​	值(value)、可	写性(writable)、可枚举性(enumerable)、可配置性(configurable)
+
+2.存取属性
+
+​	存取属性不具有值特性和可写性，它的可写性是由有没有setter方法存在决定的
+
+​	读取(get)、写入(set)、可枚举性(enumerable)、可配置性(configurable)
+
+
+
+**Object.getOwnPropertyDescriptor()**
+
+可以使用此方法获取一个对象中“**自有属性**”的这4个特性	
+
+```javascript
+        var obj2 = {
+            val: 200, // 数据属性
+            get getVal() {return this.val}, // 存取属性
+            set getVal(newVal) {this.val = newVal}
+        }
+        
+       	console.log(Object.getOwnPropertyDescriptor(obj2, "val"));
+        console.log(Object.getOwnPropertyDescriptor(obj2, "getVal"));
+        console.log(Object.getOwnPropertyDescriptor(obj2, "y")); // 不存在的属性
+        console.log(Object.getOwnPropertyDescriptor(obj2, "toString")); // 继承的属性
+        // {configurable：true, enumerable: true, value: 200, writable: true}
+        // {configurable：true, enumerable: true, get: f getVal(), set: f setVal()}  
+	    // undefined
+        // undefined
+```
 
 
 
