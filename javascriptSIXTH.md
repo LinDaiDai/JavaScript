@@ -588,8 +588,8 @@ for in 遍历的是对象的键，数组的下标
 遍历的顺序按照属性定义的先后顺序
         var obj = {x: 1, y: 2, z: 3};
         var arr = [1, 2, 3];
-        for (o in obj) console.log(o); // x, y, z
-        for (i in arr) console.log(i); // 0, 1, 2
+        for (let o in obj) console.log(o); // x, y, z
+        for (let i in arr) console.log(i); // 0, 1, 2
         
 利用for in 获取对象的所有键
 var arr = [], i = 0;
