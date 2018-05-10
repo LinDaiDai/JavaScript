@@ -136,7 +136,7 @@ npm publish
 npm i --save-dev fm_lindaidai_first
 ```
 
-来安装自己的模块
+接下来可以安装自己的模块
 
 并在项目中使用
 
