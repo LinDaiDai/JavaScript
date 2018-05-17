@@ -34,14 +34,14 @@ npm i -g publish
 
 创建空文件夹 `fm_lindaidai_first`
 
-并在命令行输入
+并且在命令行输入
 
 ```
 npm init
 一路回车
 ```
 
-此时出现`package.json`
+此时会出现`package.json`
 
 ```
 {
