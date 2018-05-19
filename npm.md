@@ -98,7 +98,7 @@ date.js
 
 由于命名的是date.js，因此记得将package.json中的“main”修改为date.js
 
-否则别人使用的时候会报错
+否则别人使用的时候就会报错
 
 
 
