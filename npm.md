@@ -138,7 +138,7 @@ npm i --save-dev fm_lindaidai_first
 
 接下来可以安装自己的模块
 
-并在项目中使用
+接下来可以在项目中使用
 
 ```
 var datechange = require('fm_lindaidai_first');
