@@ -130,7 +130,7 @@ npm publish
 
 #### 4.使用自己的模块
 
-可以直接在项目中使用指令
+可以直接就在项目中使用指令
 
 ```
 npm i --save-dev fm_lindaidai_first
