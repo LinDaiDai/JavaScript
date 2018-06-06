@@ -16,7 +16,7 @@ npm login //登录用户
 npm whoami
 ```
 
-检测用户是否登录
+检测用户是否登录上了npm
 
 
 
