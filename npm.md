@@ -497,13 +497,13 @@ src/index.js在后面会讲到。
 
 ####3.2 将整个vue项目发布至npm
 
-要想将vue项目发布至npm上，需要做一些配置
+要想将vue项目发布至npm上，我们需要做一些配置
 * 修改package.json
   1. 修改"private": false
     npm默认创建的项目是私有的，如果要发布至npm必须将其公开
 
    2. 添加"main": "dist/build.js"
-    通过import formlin from 'form-lin'引用该组件时，项目会自动找到node_modules/load-ling-zi/dist/build.js
+       通过import formlin from 'form-lin'引用该组件时，项目会自动找到node_modules/load-ling-zi/dist/build.js
 
 * 在src加入组件代码App.vue， 并创建我们的导出文件index.js。 在index.js中添加：
 ```
