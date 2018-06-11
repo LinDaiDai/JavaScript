@@ -233,7 +233,7 @@ npm i element-ui -S
 ```
 npm install babel-plugin-component -D
 ```
-然后，将 .babelrc 修改为：
+然后，再将 .babelrc 修改为：
 ```
 {
   "presets": [["es2015", { "modules": false }]],
