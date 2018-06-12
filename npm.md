@@ -22,7 +22,7 @@ npm whoami
 
 ### 第二章 发布模块
 
-#### 1.首先安装npm publish
+#### 1.首先要安装npm publish
 
 ```
 npm i -g publish
