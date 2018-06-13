@@ -34,7 +34,7 @@ npm i -g publish
 
 创建空文件夹 `fm_lindaidai_first`
 
-并且在命令行输入
+并且在命令行中输入
 
 ```
 npm init
