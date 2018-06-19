@@ -620,7 +620,7 @@ vue init webpack use-form-lin
 npm install element-ui -S
 npm install form-lin babel-plugin-component -D
 ```
-需要配置以下
+需要配置以下文件
 ```
 main.js
 import { Button, Select, Input, Option, InputNumber } from 'element-ui';
