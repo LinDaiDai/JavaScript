@@ -379,7 +379,7 @@ export default {
 <!--下拉框组件-->
 <component :is="SelectList"></component>
 ```
-那么我们就可以通过`v-for`来循环创建不同的表单组件，仅仅只需要改变`:is`的值就行了
+那么我们就可以通过`v-for`来循环创建不同的表单组件了，仅仅只需要改变`:is`的值就行了
 
 接下来 还是在v5文件夹下，创建文件`FormGenerator.vue`
 > FormGenerator.vue
