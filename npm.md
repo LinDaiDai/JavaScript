@@ -32,7 +32,7 @@ npm i -g publish
 
 #### 2.创建自己的npm模块
 
-创建空文件夹 `fm_lindaidai_first`
+创建新空文件夹 `fm_lindaidai_first`
 
 并且在命令行中输入
 
