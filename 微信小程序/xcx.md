@@ -90,6 +90,30 @@
 
 
 
+### 4.mpvue
+
+`mpvue` 是一个使用 vue.js开发小程序的前端框架
+
+使得用vue.js编写的前端代码能够运行在小程序中
+
+![mpvue](C:\Users\cestbon\Downloads\mpvue.png)
+
+**优势**
+
+1. 可以和H5做适应，简单的H5可能可以一套代码跑多端。
+
+2. 用Vue语法上手更容易。
+
+3. 配合webpack定制更灵活
+
+   **劣势**
+
+4. 不支持纯HTML，BOM/DOM都不能用
+
+5. 生态还不够完善，没有完善的组件库
+
+6. 暂不支持mintUI，而当前家长端项目使用的是mintUI
+
 
 
 
