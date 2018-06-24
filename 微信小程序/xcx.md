@@ -26,7 +26,7 @@
 
   ​
 
-  ![img](C:\Users\Public\Pictures\wxewm.png)
+  ![img](https://github.com/LinDaiDai/JavaScript/blob/master/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/img/wxewm.png?raw=true)
 
 * 成本更低
 
@@ -96,7 +96,7 @@
 
 使得用vue.js编写的前端代码能够运行在小程序中
 
-![mpvue](C:\Users\cestbon\Downloads\mpvue.png)
+![mpvue](https://github.com/LinDaiDai/JavaScript/blob/master/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/img/mpvue.png?raw=true)
 
 **优势**
 

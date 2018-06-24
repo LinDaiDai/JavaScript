@@ -248,7 +248,7 @@ npm install babel-plugin-component -D
   ]
 }
 ```
-在main.js中引入部分组件
+要在main.js中引入部分组件
 ```
 import { Button, Select, Input, Option, InputNumber } from 'element-ui';
 Vue.component(Button.name, Button);
