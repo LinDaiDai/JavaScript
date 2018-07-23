@@ -422,14 +422,36 @@ var  p1 = {
   age:18
 };
 var p2 = {
-  name:"小雲"
+  name:"王"
   sex:"女"
 }
 var p3 = {};
 Object.assign(p3,p1,p2);
 console.log(p3);
-=>{name: "小雲", age: 18, sex: "女"}
+=>{name: "王", age: 18, sex: "女"}
 ```
+
+> 深拷贝
+
+深拷贝可以使用`JSON.parse(JSON.stringify(p))`,这样拷贝的对象就不会被改变
+
+```
+    var p = {
+            name: "王"
+        };
+    var p1 = JSON.parse(JSON.stringify(p))
+    p1.name = "张";
+    console.log(p);
+    console.log(p1);
+    => {name:"王"}
+    => {name:"张"}    
+```
+
+**注**:不过上面的深拷贝方式还是会有不足之处：
+
+- 会忽略undefined
+- 不能序列化函数
+- 不能解决循环引用的对象
 
 
 
@@ -550,9 +572,9 @@ const { type, name };
                 name:"王",
                 age:18
             };
-            var {name:"张",age:20} = p;	//这里就相当于声明了两个变量： name=p.name   age=p.age
-            console.log(name,age);
-            =>王  18
+            var {name="张",age=20,sex='男'} = p;	//这里就相当于声明了两个变量： name=p.name   age=p.age
+            console.log(name,age,sex);
+            =>王  18  男
 ```
 
 
