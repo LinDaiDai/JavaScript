@@ -706,15 +706,15 @@ ES6之前,属性名只能使用字符串,如果是其他类型的,在js会自动
 
 ```
 例2:
-var m = ["age":20];
+var mr = [1,2];
 var obj = {
   [m]:"abc"		
 }
 console.log(obj);	
-=>{age,20: "abc"}
+=>{1,2: "abc"}
 
 例3:
-var m = ["age":20];
+var m = {"age":20};
 var obj = {
   [m]:"abc"		
 }
