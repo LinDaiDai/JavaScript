@@ -134,8 +134,8 @@ var promise = new Promise((resolve, reject) => {
 
 
 ```
-    async await
-    返回Promise
+    //async await
+    //返回Promise
     let timer = async function timer() {
         return new Promise((reslove, reject) => {
             setTimeout(() => {
@@ -149,7 +149,7 @@ var promise = new Promise((resolve, reject) => {
         console.log(err.message);
     })
 
-    返回同步的值
+    //返回同步的值
     let sayHello = async function sayHello() {
         let hi = 'hello world'//等同于return Promise.resolve(hi);
         return hi
