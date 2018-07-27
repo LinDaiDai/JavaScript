@@ -129,9 +129,13 @@ var promise = new Promise((resolve, reject) => {
 })
 ```
 
+
+
 #### 支持返回Promise和同步的值
 
-
+async用于定义一个异步函数，该函数返回一个Promise。
+如果async函数返回的是一个同步的值，这个值将被包装成一个理解resolve的Promise，等同于`return Promise.resolve(value)`。
+await用于一个异步操作之前，表示要“等待”这个异步操作的返回值。await也可以用于一个同步的值。
 
 ```
     //async await
@@ -160,4 +164,177 @@ var promise = new Promise((resolve, reject) => {
         console.log(err.message);
     })
 ```
+
+
+
+#### 对异常的处理
+
+> 首先来看下`Promise`中对异常的处理
+
+1.使用`reject`
+
+```
+let promise = new Promise((reslove, reject) => {
+  setTimeout(() => {
+  	reject('promise使用reject抛出异常')  
+  }, 1000)
+})
+promise().then(res => {
+  console.log(res)
+})
+.catch(err => {
+  console.log(err)     //'promise使用reject抛出异常'
+})
+
+```
+
+2.使用`new Error()`
+
+```
+let promise = new Promise((reslove, reject) => {
+  	throw new Error('promise使用Error抛出异常') //使用throw异常不支持放在定时器中
+})
+promise().then(res => {
+  console.log(res)
+})
+.catch(err => {
+  console.log(err.message)     //'promise使用Error抛出异常'
+})
+
+```
+
+3.`reject`一个`new Error()`
+
+```
+	let promise = new Promise((resolve, reject) => {
+	
+        setTimeout(() => {
+            reject(new Error('promise抛出异常'));
+        }, 1000);
+    })
+
+    promise.then(res => {
+        console.log(res);
+    })
+    .catch(err => {
+        console.log(err.message);  //'promise抛出异常'
+    })
+```
+
+> `async`对异常的处理也可以直接用`.catch()`捕捉到
+
+```
+	//async抛出异常
+    let sayHi = async sayHi => {
+            throw new Error('async抛出异常');
+    }
+    sayHi().then(res => {
+        console.log(res);
+    })
+    .catch(err => {
+        console.log(err.message);
+    })
+```
+
+> 和Promise链的对比：
+
+我们的async函数中可以包含多个异步操作，其异常和Promise链有相同之处，如果有一个Promise被reject()那么后面的将不会再进行。
+
+```
+    let count = () => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject('promise故意抛出异常')
+            }, 1000);
+        })
+    }
+    let list = () => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([1, 2, 3])
+            }, 1000);
+        })
+    }
+
+    let getList = async () => {
+        let c = await count()
+        console.log('async')    //此段代码并没有执行
+        let l = await list()
+        return { count: c, list: l }
+    }
+    console.time('start');
+    getList().then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.timeEnd('start')
+        console.log(err)
+    })
+    
+    //start: 1000.81494140625ms
+    //promise故意抛出异常
+```
+
+可以看到上面的案例，`async`捕获到了一个错误之后就会立马进入`.catch()`中，不执行之后的代码
+
+
+
+#### 并行
+
+上面的案例中，async采用的是串行处理
+
+count()和list()是有先后顺序的
+
+```
+let c = await count()
+let l = await list()
+```
+
+实际用法中，若是请求的两个异步操作没有关联和先后顺序性可以采用下面的做法
+
+```
+let res = await Promise.all([count(), list()])
+return res
+
+//res的结果为
+//[ 100, [ 1, 2, 3 ] ]
+```
+
+
+
+案例详情为：
+
+```
+let count = ()=>{
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{
+            resolve(100);
+        },500);
+    });
+}
+
+let list = ()=>{
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            resolve([1,2,3]);
+        },500);
+    });
+}
+
+let getList = async ()=>{
+    let result = await Promise.all([count(),list()]);
+    return result;
+}
+console.time('begin');
+getList().then(result => {
+    console.timeEnd('begin');  //begin: 505.557ms
+    console.log(result);       //[ 100, [ 1, 2, 3 ] ]
+}).catch(err => {
+    console.timeEnd('begin');
+    console.log(err);
+});
+```
+
+> 我们将count()和list()使用Promise.all()“同时”执行，这里count()和list()可以看作是“并行”执行的，所耗时间将是两个异步操作中耗时最长的耗时。
+> 最后得到的结果是两个操作的结果组成的数组。我们只需要按照顺序取出数组中的值即可。
 
