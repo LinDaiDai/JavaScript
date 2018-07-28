@@ -129,6 +129,15 @@ var promise = new Promise((resolve, reject) => {
 })
 ```
 
+#### 声明方式
+
+异步函数存在以下四种使用形式：
+
+- 函数声明： `async function foo() {}`
+- 函数表达式： `const foo = async function() {}`
+- 对象的方式： `let obj = { async foo() {} }`
+- 箭头函数： `const foo = async () => {}`
+
 
 
 #### 支持返回Promise和同步的值
@@ -337,4 +346,33 @@ getList().then(result => {
 
 > 我们将count()和list()使用Promise.all()“同时”执行，这里count()和list()可以看作是“并行”执行的，所耗时间将是两个异步操作中耗时最长的耗时。
 > 最后得到的结果是两个操作的结果组成的数组。我们只需要按照顺序取出数组中的值即可。
+
+
+
+#### 与Generator的关系
+
+先来回顾一下ES6中`Generator`函数的用法：
+
+```
+	function* getList() {
+        const c = yield count()
+        const l = yield list()
+        return 'end'
+    }
+    var gl = getList()
+    console.log(gl.next()) // {value: Promise, done: false}
+    console.log(gl.next()) // {value: Promise, done: false}
+    console.log(gl.next()) // {value: 'end', done: true}
+```
+
+> 虽然Generator将异步操作表示得很简洁，但是流程管理却不方便（即何时执行第一阶段、何时执行第二阶段）。此时，我们便希望能出现一种能自动执行Generator函数的方法。我们的主角来了：async/await。
+
+**ES8引入了async函数，使得异步操作变得更加方便。简单说来，它就是Generator函数的语法糖。**
+
+```
+let getList = async () => {
+  const c = await count()
+  const l = await list()
+}
+```
 
