@@ -2,7 +2,7 @@
 
 ## ES7
 
-### Array.prototype.includes()
+### 1.Array.prototype.includes()
 
 > includes()作用,是查找一个值在不在数组里,若是存在则返回true,不存在返回false.
 
@@ -77,7 +77,7 @@ arr.indexOf([2, 3])    //-1
 
 
 
-### 求幂运算符**
+### 2.求幂运算符**
 
 基本用法：
 
@@ -99,11 +99,11 @@ console.log(b); //9
 
 ## ES8
 
-### async await
+### 1.async await
 
 异步函数`async function()`
 
-#### 作用
+#### 1.1作用
 
 避免有更多的请求操作，出现多重嵌套，也就是俗称的“回调地狱”
 
@@ -129,7 +129,7 @@ var promise = new Promise((resolve, reject) => {
 })
 ```
 
-#### 声明方式
+#### 1.2声明方式
 
 异步函数存在以下四种使用形式：
 
@@ -140,7 +140,7 @@ var promise = new Promise((resolve, reject) => {
 
 
 
-#### 支持返回Promise和同步的值
+#### 1.3支持返回Promise和同步的值
 
 async用于定义一个异步函数，该函数返回一个Promise。
 如果async函数返回的是一个同步的值，这个值将被包装成一个理解resolve的Promise，等同于`return Promise.resolve(value)`。
@@ -176,7 +176,7 @@ await用于一个异步操作之前，表示要“等待”这个异步操作的
 
 
 
-#### 对异常的处理
+#### 1.4对异常的处理
 
 > 首先来看下`Promise`中对异常的处理
 
@@ -288,7 +288,7 @@ promise().then(res => {
 
 
 
-#### 并行
+#### 1.5并行
 
 上面的案例中，async采用的是串行处理
 
@@ -349,7 +349,7 @@ getList().then(result => {
 
 
 
-#### 与Generator的关系
+#### 1.6与Generator的关系
 
 先来回顾一下ES6中`Generator`函数的用法：
 
@@ -378,9 +378,9 @@ let getList = async () => {
 
 
 
-### Object.entries()
+### 2.Object.entries()
 
-#### 作用
+#### 2.1作用
 
 > 作用：将一个对象中可枚举属性的键名和键值按照二维数组的方式返回。
 >
@@ -391,7 +391,7 @@ Object.entries({ one: 1, two: 2 })    //[['one', 1], ['two', 2]]
 Object.entries([1, 2])                //[['0', 1], ['1', 2]]
 ```
 
-#### 要点
+#### 2.2要点
 
 1.若是键名是`Symbol`，编译时会被自动忽略
 
@@ -417,7 +417,7 @@ Object.entries({ 3: 'a', 4: 'b', 1: 'c' })    //[['1', 'c'], ['3', 'a'], ['4', '
     console.log(map2);// Map { foo: "bar", baz: 42 }
 ```
 
-#### 自定义`Object.entries()`
+#### 2.3自定义`Object.entries()`
 
 `Object.entries`的原理其实就是将对象中的键名和值分别取出来然后推进同一个数组中
 
@@ -446,9 +446,9 @@ Object.entries({ 3: 'a', 4: 'b', 1: 'c' })    //[['1', 'c'], ['3', 'a'], ['4', '
 
 
 
-### Object.values()
+### 3.Object.values()
 
-#### 作用
+#### 3.1作用
 
 > 作用：只返回自己的键值对中属性的值。它返回的数组顺序，也跟`Object.entries()`保持一致
 
@@ -457,7 +457,7 @@ Object.values({ one: 1, two: 2 })            //[1, 2]
 Object.values({ 3: 'a', 4: 'b', 1: 'c' })    //['c', 'a', 'b']
 ```
 
-#### 与Object.keys()比较
+#### 3.2与Object.keys()比较
 
 > ES6中的`Object.keys()`返回的是键名
 
@@ -465,11 +465,22 @@ Object.values({ 3: 'a', 4: 'b', 1: 'c' })    //['c', 'a', 'b']
     var obj = { foo: 'bar', baz: 42 };
     console.log(Object.keys(obj)) //["foo", "baz"]
     console.log(Object.values(obj)) //["bar", 42]
+    
+    //Object.keys()的作用就类似于for...in
+    function myKeys() {
+        let keyArr = []
+        for (let key in obj1) {
+            keyArr.push(key)
+            console.log(key)
+        }
+        return keyArr
+    }
+    console.log(myKeys(obj1)) //["foo", "baz"]
 ```
 
 
 
-#### entries()、values()总结
+#### 3.3entries()、values()总结
 
 ```
     var obj = { foo: 'bar', baz: 42 };
@@ -480,9 +491,9 @@ Object.values({ 3: 'a', 4: 'b', 1: 'c' })    //['c', 'a', 'b']
 
 
 
-### 字符串填充
+### 4.字符串填充
 
-#### padStart()和padEnd()
+#### 4.1padStart()和padEnd()
 
 > 字符串填充`padStart()`和`padEnd()`
 
@@ -498,7 +509,7 @@ Object.values({ 3: 'a', 4: 'b', 1: 'c' })    //['c', 'a', 'b']
 'JavaScript'.padStart(10)    //'JavaScript'
 ```
 
-#### 要点
+#### 4.2要点
 
 1.填充函数只有在字符长度小于目标长度时才有效,而且目标长度如果小于字符串本身长度时，字符串也不会做截断处理，只会原样输出
 
@@ -507,5 +518,123 @@ Object.values({ 3: 'a', 4: 'b', 1: 'c' })    //['c', 'a', 'b']
 'React'.padEnd(10, 'Hello')      //'ReactHello'
 'JavaScript'.padEnd(10, 'Hi')    //'JavaScript'
 'JavaScript'.padEnd(8, 'Hi')     //'JavaScript'
+```
+
+
+
+### 5.Object.getOwnPropertyDescriptors()
+
+#### 5.1作用
+
+> 该方法会返回目标对象中所有属性的属性描述符，该属性必须是对象自己定义的，不能是从原型链继承来的。
+
+```
+    var obj = {
+        id:  1,
+        name: '霖呆呆',
+        get gender() {
+            console.log('gender')
+        },
+        set grad(d) {
+            console.log(d)
+        }
+    }
+    console.log(Object.getOwnPropertyDescriptors(obj))
+ //输出   
+{
+  gender: {
+    configurable: true,
+    enumerable: true,
+    get: f gender(),
+    set: undefined
+  },
+  grade: {
+    configurable: true,
+    enumerable: true,
+    get: undefined,
+    set: f grade(g)
+  },
+  id: {
+    configurable: true,
+    enumerable: true,
+    value: 1,
+    writable: true
+  },
+  name: {
+    configurable: true,
+    enumerable: true,
+    value: '霖呆呆',
+    writable: true
+  }
+}
+```
+
+> 第二个参数,用于指定属性的属性描述符
+
+```
+Object.getOwnPropertyDescriptors(obj, 'id')
+
+//输出结果应该为
+{
+  id: {
+    configurable: true,
+    enumerable: true,
+    value: 1,
+    writable: true
+  }
+}
+```
+
+但是我在谷歌/火狐浏览器试了好像没有效果,有知道原因的小伙请留言
+
+#### 5.2与`getOwnPropertyDescriptor()`比较
+
+> ES6中也有一个返回目标对象可枚举属性的方法
+
+```
+var obj = {
+    id: 1,
+    name: '霖呆呆',
+    get gender() {
+        console.log('gender')
+    },
+    set grad(d) {
+        console.log(d)
+    }
+}
+console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
+        
+//输出结果
+ {
+  id: {
+    configurable: true,
+    enumerable: true,
+    value: 1,
+    writable: true
+  }
+}
+```
+
+**两者的区别：一个是只返回知道属性名的描述对象,一个返回目标对象所有自身属性的描述对象**
+
+
+
+#### 5.3自定义该方法
+
+```
+        function myDescriptors(obj) {
+            let descriptors = {}
+            for (let key in obj) {
+                descriptors[key] = Object.getOwnPropertyDescriptor(obj, key)
+            }
+            return descriptors
+        }
+        console.log(myDescriptors(obj))
+        //返回的结果和该方法一样
+        
+        //其中上面自定义方法的for...in也可以换成,效果也是一样的
+        for (let key of Object.keys(obj)) {
+            descriptors[key] = Object.getOwnPropertyDescriptor(obj, key)
+        }
 ```
 
