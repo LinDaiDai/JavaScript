@@ -638,3 +638,67 @@ console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
         }
 ```
 
+
+
+### 6.函数参数支持尾部逗号
+
+该特性允许我们在定义或者调用函数时添加尾部逗号而不报错
+
+```
+        let foo = function (
+                a,
+                b,
+                c,
+            ) {
+                console.log('a:', a)
+                console.log('b:', b)
+                console.log('c:', c)
+            }
+            foo(1, 3, 4, )
+
+            //输出结果为：
+            a: 1
+            b: 3
+            c: 4
+```
+
+> 它适用于那种多行参数并且参数名很长的情况，开发过程中，如果忘记删除尾部逗号也没关系，ES8已经支持这种写法。
+
+
+
+### 装饰器Decorator
+
+> ES8神器Decorator
+
+在介绍`Decorator`之前，先实现这样一个功能：
+
+定义一个函数，在调用这个函数时，能够执行一些其他额外操作
+
+如下代码,定义`doSometing()`,在调用它时再执行其他代码
+
+```
+        function doSometing(name) {
+            console.log('Hello' + name)
+        }
+        function myDecorator(fn) {
+            return function() {
+                console.log('start')
+                const res = fn.apply(this, arguments)
+                console.log('end')
+                return res
+            }
+        }
+        const wrapped = myDecorator(doSometing)
+        doSometing('lindaidai')
+        //Hellowlindaidai
+        
+        wrapped('lindaidai')
+        //start 
+        //Hellowlindaidai
+        //end
+```
+
+可以看到上面的操作：其实就是一个函数包装成另一个函数,这样的方式我们称之为“装饰器”
+
+
+
