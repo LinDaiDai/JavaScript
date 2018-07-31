@@ -666,11 +666,13 @@ console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
 
 
 
-### 装饰器Decorator
+### 7.修饰器Decorator
 
-> ES8神器Decorator
+> ES8神器Decorator，修饰器，也称修饰器模式
 
-在介绍`Decorator`之前，先实现这样一个功能：
+#### 7.1 伪Decorator
+
+在介绍`Decorator`之前，我们先来实现这样一个功能：
 
 定义一个函数，在调用这个函数时，能够执行一些其他额外操作
 
@@ -698,7 +700,258 @@ console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
         //end
 ```
 
-可以看到上面的操作：其实就是一个函数包装成另一个函数,这样的方式我们称之为“装饰器”
+**可以看到上面的操作：其实就是一个函数包装成另一个函数,这样的方式我们称之为“修饰器”**	
+
+同理，我们是不是能用一个什么东西附着在我们的类或者函数上，让它们也有一些附加的属性或者功能呢，比如这样：
+
+```
+@addSkill
+class Person { }
+
+function addSkill(target) {
+    target.say = "hello world";
+}
+```
+
+在`Person`这个类中，开始定义的时候是什么属性都没有的，在其上面使用`@`来附着上一个函数，这个函数的功能是给目标对象添加额外的属性`say`。
+
+这样`Person`这个类就有了`say`这个属性了。
+
+此时控制台输出：
+
+```
+console.log(Person['say']) //'hello world'
+```
+
+同样的，如果想使用`Person`这个类创建出来的对象也能附加上一些属性，可以在目标对象的原型对象中进行添加：
+
+```
+@addSkill
+class Person { }
+
+function addSkill(target) {
+    target.say = "hello world"; //直接添加到类中
+    target.prototype.eat = "apple"; //添加到类的原型对象中
+}
+var personOne = new Person()
+
+console.log(Person['say']) // 'hello world'
+console.log(personOne['eat']) // 'apple'
+```
+
+> 上面案例中的`@addSkill`其实就是一个最简单的修饰器。
+
+当然，如果你将上面案例中的代码复制到你html文件中，会发现它并不能如愿的执行:
+
+![decorator报错](D:\wenjian\javascript\JavaScript\Decorator\img\img1.png)
+
+那是因为decorator是es7提供的方法，在浏览器中是无法直接运行的，如果你想要使用它，我们需要提前做一些准备，对它进行编译。
+
+如果你不想深入其中，只是想单纯的了解并使用它可以参考下面的简易教程。
+
+#### 7.2 快速使用
+
+网上使用`Decorator`的教材有很多，大多都是要需要使用插件来让浏览器支持`Decorator`。这里长话短说，贴上一个最精简的使用教程：
+
+> 1.创建一个名为：Decorator的文件夹
+>
+> 2.在文件夹目录下执行命令行
+>
+> ```
+> npm i babel-plugin-transform-decorators-legacy babel-register --save-dev
+> ```
+>
+> 此时文件夹下会出现俩个文件： node_modules 依赖文件夹和package.json-lock.json
+
+> 3.创建文件 complie.js
+>
+> ```
+> require('babel-register')({
+>     plugins: ['transform-decorators-legacy']
+> });
+> require("./app.js")
+> ```
+
+> 4.创建文件 app.js
+>
+> ```
+> @addSkill
+> class Person { }
+> function addSkill(target) {
+>     target.say = "hello world";
+> }
+> console.log(Person.say)   //'hello world'
+> ```
+
+> 5.在根目录下执行指令：
+>
+> ```
+> node complie.js
+> ```
+>
+> 此时可以看到命令行中打印出了 hello world
+
+简单介绍下上面步骤的原理：
+
+第二步中使用了俩个基础插件：
+
+```
+transform-decorators-legacy：
+//是第三方插件，用于支持decorators
+
+babel-register：
+//用于接入node api
+```
+
+第三步、第四步创建的俩个文件
+
+```
+complie.js  //用来编译app
+app.js   //使用了装饰器的js文件
+```
+
+第五步：
+
+```
+原理：
+1，node执行complie.js文件；
+2，complie文件改写了node的require方法；
+3，complie在引用app.js，使用了新的require方法；
+4，app.js在加载过程中被编译，并执行。
+```
 
 
 
+> 当然你也可以将app.js替换为app.ts 不过别忘了把complie.js中的app.js修改为app.ts
+
+```javascript
+// app.ts
+@addSkill
+class Person { }
+function addSkill(target) {
+    target.say = "hello world";
+}
+console.log(Person['say'])   
+//这里如果直接使用Person.say会提示say属性不存在,如我使用的vscode编辑器就会报错,是因为ts的原因，只需要用[]的形式获取对象属性即可。
+```
+
+**注：ts中有些语法是和js中不一样的，比如有些对象上提示没有属性的时候，只需要换一种获取对象属性的方式即可。**
+
+
+
+#### 7.3 类修饰器
+
+直接作用在类上面的修饰器，我们可以称之为类修饰器。
+
+如上面案例中的`@addSkill`就是一个类修饰器，它修改了`Person`这个类的行为，为它加上了静态属性`say`。
+
+`addSkill`函数的参数target是`Person`这个类本身。
+
+>  1.修饰器的执行原理基本就是这样：
+
+```javascript
+@decorator
+class A {}
+
+// 等同于
+
+class A {}
+A = decorator(A) || A;
+```
+
+**换句话说，类修饰器是一个对类进行处理的函数。**
+
+它的第一个参数target就是函数要处理的目标类。
+
+> 2.多参数
+
+当然如果你想要有多个参数也是可以的，我们可以在修饰器外面再封装一层函数：
+
+```javascript
+@addSkill("hello world")
+class Person { }
+function addSkill(text) {
+    return function(target) {
+        target.say = text;
+    }
+}
+console.log(Person.say)  //'hello world'
+```
+
+上面代码中，修饰器`addSkill`可以接受参数，这就等于可以修改修饰器的行为。
+
+> 3.修饰器在什么时候执行。
+
+先来看一个案例：
+
+```
+@looks
+class Person { }
+function looks(target) {
+    console.log('I am handsome')
+    target.looks = 'handsome'
+}
+
+console.log(Person['looks'])
+
+//I am handsome
+//handsome
+```
+
+在修饰器`@looks`中添加一个`console.log()`语句，却发现它是最早执行的，其次才打印出`handsome`。
+
+**这是因为装饰器对类的行为的改变，是代码编译时发生的，而不是在运行时。这意味着，装饰器能在编译阶段运行代码。也就是说，装饰器本质就是编译时执行的函数。**	
+
+> 装饰器是在编译时就执行的函数
+
+
+
+#### 7.4 方法修饰器
+
+上面的案例中，修饰器作用的对象是类本身。
+
+当然修饰器不仅仅这么简单，它也可以作用在类里的某个方法或者属性上，这样的修饰器我们称之为方法修饰器。
+
+如下面的案例：
+
+```
+class Person {
+    constructor() {}
+    @myname  //方法修饰器
+    name() {
+        console.log('霖呆呆') 
+    }
+}
+function myname(target, key, descriptor) {
+    console.log(target);
+    console.log(key);
+    console.log(descriptor);
+    descriptor.value = function() {
+        console.log('霖呆呆')
+    }
+}
+
+var personOne = new Person() //实例化
+personOne.name() //调用name()方法
+
+
+//打印结果：
+Person {}
+name
+{ value: [Function: name],
+  writable: true,
+  enumerable: false,
+  configurable: true 
+ }
+霖呆呆
+```
+
+上面案例中的修饰器`@myname`是放在`name()`方法上的，`myname`函数有三个参数：
+
+```
+target: 类的原型对象，上例是Person.prototype
+key: 所要修饰的属性名
+descriptor: 该属性的描述对象
+```
+
+我们改变了`descriptor`中的`value`，使之打印出霖呆呆。

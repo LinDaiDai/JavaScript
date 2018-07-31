@@ -454,6 +454,46 @@ console.log(p3);
 - 不能解决循环引用的对象
 
 
+##### 3.Object.keys()
+
+> 返回一个数组，数组中的每一项为目标对象可枚举属性名的集合
+
+```
+    var obj = { foo: 'bar', baz: 42 };
+    console.log(Object.keys(obj)) //["foo", "baz"]
+```
+
+> 与ES8中的`Object.values()`比较,`Object.values()`返回的是属性值的数组
+
+```
+    var obj = { foo: 'bar', baz: 42 };
+    console.log(Object.keys(obj)) //["foo", "baz"]
+    console.log(Object.values(obj)) //["bar", 42]
+```
+
+> 自定义Object.keys()
+
+```
+    //Object.keys()的作用就类似于for...in
+    function myKeys() {
+        let keyArr = []
+        for (let key in obj1) {
+            keyArr.push(key)
+            console.log(key)
+        }
+        return keyArr
+    }
+    console.log(myKeys(obj1)) //["foo", "baz"]
+```
+
+> 与ES8中的`Object.entries()`比较,`Object.entries()`返回的是目标对象所有可枚举属性的属性名和属性值的二维数组,并且返回数组的顺序是按键名升序
+
+```
+Object.entries({ 3: 'a', 4: 'b', 1: 'c' })    //[['1', 'c'], ['3', 'a'], ['4', 'b']]
+```
+
+
+
 
 ### 第六章:字符串功能的增加
 
