@@ -743,7 +743,7 @@ console.log(personOne['eat']) // 'apple'
 
 当然，如果你将上面案例中的代码复制到你html文件中，会发现它并不能如愿的执行:
 
-![decorator报错](D:\wenjian\javascript\JavaScript\Decorator\img\img1.png)
+![decorator报错](https://github.com/LinDaiDai/JavaScript/blob/master/Decorator/img/img1.png?raw=true)
 
 那是因为decorator是es7提供的方法，在浏览器中是无法直接运行的，如果你想要使用它，我们需要提前做一些准备，对它进行编译。
 
