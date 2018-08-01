@@ -678,7 +678,7 @@ console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
 
 如下代码,定义`doSometing()`,在调用它时再执行其他代码
 
-```
+```javascript
         function doSometing(name) {
             console.log('Hello' + name)
         }
@@ -702,7 +702,7 @@ console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
 
 **可以看到上面的操作：其实就是一个函数包装成另一个函数,这样的方式我们称之为“修饰器”**	
 
-同理，我们是不是能用一个什么东西附着在我们的类或者函数上，让它们也有一些附加的属性或者功能呢，比如这样：
+同理，我们是不是能用一个什么东西附着在我们的类或者类的属性上，让它们也有一些附加的属性或者功能呢，比如这样：
 
 ```
 @addSkill
@@ -950,7 +950,7 @@ name
 
 ```
 target: 类的原型对象，上例是Person.prototype
-key: 所要修饰的属性名
+key: 所要修饰的属性名  name
 descriptor: 该属性的描述对象
 ```
 
