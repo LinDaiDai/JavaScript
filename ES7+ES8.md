@@ -955,3 +955,105 @@ descriptor: 该属性的描述对象
 ```
 
 我们改变了`descriptor`中的`value`，使之打印出霖呆呆。
+
+#### 7.5 多个修饰器的执行顺序
+
+若是同一个方法上有多个修饰器，会像剥洋葱一样，先从外到内进入，然后由内向外执行。
+
+```javascript
+class Person {
+    constructor() {}
+    @dec(1)
+    @dec(2)
+    name() {
+        console.log('霖呆呆')
+    }
+}
+function dec(id) {
+    console.log('out', id);
+    return function(target, key, descriptor) {
+        console.log(id);
+    }
+}
+
+var person = new Person()
+person.name()
+//结果
+out 1
+out 2
+2
+1
+霖呆呆
+```
+
+如上所属，外层修饰器`dec(1)`先进入，但是内层修饰器`dec(2)`先执行。
+
+#### 7.6 不能作用于函数
+
+修饰器不能作用于函数之上，这是因为函数和变量一样都会提升
+
+```
+var counter = 0;
+
+var add = function () {
+  counter++;
+};
+
+@add
+function foo() {
+}
+```
+
+如上面的例子所示，给函数`foo()`定义了修饰器`@add`，作用是想将`counter++`
+
+预计的结果`counter`为1，但实际上却还是为0
+
+原因：
+
+定义的函数`foo()`会被提升至最上层，定义的变量`counter`和`add`也会被提升，效果如下：
+
+```
+@add
+function foo() {
+}
+
+var counter;
+var add;
+
+counter = 0;
+
+add = function () {
+  counter++;
+};
+```
+
+
+
+总之，由于存在函数提升，使得修饰器不能用于函数。类是不会提升的，所以就没有这方面的问题。
+
+另一方面，如果一定要修饰函数，可以采用高阶函数的形式直接执行。
+
+如在7.1中的例子所示：
+
+```javascript
+        function doSometing(name) {
+            console.log('Hello' + name)
+        }
+        function myDecorator(fn) {
+            return function() {
+                console.log('start')
+                const res = fn.apply(this, arguments)
+                console.log('end')
+                return res
+            }
+        }
+        const wrapped = myDecorator(doSometing)
+        doSometing('lindaidai')
+        //Hellowlindaidai
+        
+        wrapped('lindaidai')
+        //start 
+        //Hellowlindaidai
+        //end
+```
+
