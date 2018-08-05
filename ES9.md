@@ -90,6 +90,8 @@ ES9中，允许使用`finally()`来指定最终的逻辑。
 
 ### 3. Rest/Spread 属性
 
+#### 3.1 ES6中(...)
+
 在ES6中引入了三点`...`，作用主要是`Rest参数和扩展运算符`:
 
 作用对象仅用于数组
@@ -113,7 +115,7 @@ const values = [99, 100, -1, 48, 16];
 console.log( Math.max(...values) ); // 100
 ```
 
-
+#### 3.2 ES9中(...)
 
 在ES9中为对象提供了像数组一样的Rest参数和展开运算符。
 
@@ -131,7 +133,7 @@ console.log( Math.max(...values) ); // 100
         
 ```
 
-> Spread用法
+> Spread用法，用于收集所有的剩余参数：
 
 ```
         var obj = {
@@ -157,9 +159,41 @@ const obj2 = { ...obj1, z: 26 };
 
 
 
-> 扩展运算符浅拷贝
+#### 3.3 Spread的使用场景
+
+
+
+> 1.浅拷贝
+>
+> 可以利用(...)来进行一个对象的拷贝，但是这种拷贝只能拷贝对象的可枚举自有熟悉
 
 ```
-obj2 = {...obj1}
+        var obj = {
+            name: 'LinDaiDai',
+            looks: 'handsome',
+            foo() {
+                console.log('old');
+            },
+            set setLooks(newVal) {
+                this.looks = newVal
+            },
+            get getName() {
+                console.log(this.name)
+            }
+        }
+
+        var cloneObj = {...obj};
+        cloneObj.foo = function() {
+            console.log('new')
+        };
+        console.log(obj)     
+        // { name: 'LinDaiDai',looks: 'handsome', foo: f foo(), get getName:f getName(), set setLooks: f setLooks(newVal)}
+        console.log(cloneObj)
+        // { name: 'LinDaiDai',looks: 'handsome', foo: f foo(), getName: undefined, setLooks: undefined }
+        obj.foo()
+        // old
+        cloneObj.foo()
+        // new 
 ```
 
+如上所示，定义了一个对象`obj` 并使用`(...)`进行对象的拷贝，修改对象内的函数`foo()`，并不会影响原有的对象，但是原有对象的`setter`和`getter`却不能拷贝过去。
