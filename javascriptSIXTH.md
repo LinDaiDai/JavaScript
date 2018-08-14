@@ -1240,5 +1240,33 @@ console.log(obj.name, obj.age) // 张三, 18
 
 
 
+#### 6.9 对象的三个属性
 
+每个对象都有与之相关的三个属性：原型(prototype)、类(class)、可扩展性(extensible attribute)
+
+##### 1.原型对象
+
+原型对象也叫“原型”
+
+- 查询某个对象的原型：**getPrototypeof()**
+
+  ```
+  var p = { name: 'LinDaiDai' }
+  var o = Object.create(p);
+  Object.getPrototypeof(o);
+
+  // { name: 'LinDaiDai' }
+  ```
+
+- 检测一个对象是否是另一个对象的原型：**isPrototypeOf()**
+
+```
+var p = { name: 'LinDaiDai' }
+var o = Object.create(p);
+p.isPrototypeOf(o)
+console.log(Object.prototype.isPrototypeOf(o));
+
+// true
+// true
+```
 
