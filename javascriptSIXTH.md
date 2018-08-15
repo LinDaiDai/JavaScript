@@ -1258,6 +1258,16 @@ console.log(obj.name, obj.age) // 张三, 18
   // { name: 'LinDaiDai' }
   ```
 
+- 直接用`__proto__`查询/设置对象的原型：
+
+```
+var p = { name: 'LinDaiDai' }
+
+console.log(Object.getPrototypeOf(p) === p.__proto__)
+
+// true
+```
+
 - 检测一个对象是否是另一个对象的原型：**isPrototypeOf()**
 
 ```
@@ -1269,4 +1279,176 @@ console.log(Object.prototype.isPrototypeOf(o));
 // true
 // true
 ```
+
+
+
+##### 2.类属性
+
+对象的类属性是一个字符串
+
+用以表示对象的类型信息
+
+ECMAScript3和ECMAScript5都没有提供设置这个属性的方法，并且只有一种方法来间接查询它。
+
+默认的`toString()`方法，返回了如下格式的字符串：
+
+```
+[object class]
+```
+
+因此可以提取已返回字符串的第8个到倒数第二个位置直接的字符。
+
+封装如下的方法：（可以返回传递给它的任意对象的类）
+
+```
+function classof(o) {
+        if (o === undefined) return "Undefined";
+        if (o === null) return "Null";
+        return Object.prototype.toString.call(o).slice(8, -1);
+}
+```
+
+**ECMAScript5**中可以将封装方法的前面俩个判断去掉。
+
+```
+    console.log(classof(null)) // Null
+    console.log(classof(1)) //Number
+    console.log(classof('LinDaiDai')) //String
+    console.log(classof(undefined)) //Undefined
+    console.log(classof(true)) //Boolean
+    console.log(classof({})) //Object
+    console.log(classof([])) //Array
+    console.log(classof(/./)) //RegRep
+    console.log(classof(new Date())) //Date
+    console.log(classof(window)) //Window
+    function f() {}
+    console.log(classof(new f())) //Object
+```
+
+
+
+##### 3.可扩展性
+
+可扩展性：
+
+>  是否可以给对象添加新的属性
+
+所有内置对象和自定义对象都是显式可扩展的。
+
+- 查询对象可扩展性：**Object.esExtensible**
+
+```
+var p = { name: 'LinDaiDai' }
+console.log(Object.isExtensible(p)); //true
+```
+
+- 转换对象为不可扩展：**Object.preventExtensions()**
+
+```
+var p = { name: 'LinDaiDai' }
+Object.preventExtensions(p);
+console.log(Object.isExtensible(p)); //false
+
+//设置为不可扩展后，再给对象添加属性时，则此属性为undefined
+var p = { name: 'LinDaiDai' }
+Object.preventExtensions(p);
+p.sex = "男"
+console.log(p.sex); //undefined
+```
+
+**对象一旦转换为不可扩展，就无法再将其转换回可扩展了**	
+
+
+
+#### 6.10序列化对象
+
+> 序列化对象是指对象的状态转换为字符串，也可以将字符串还原为对象。
+
+序列化对象：**JSON.stringify()**
+
+还原对象：**JSON.parse()**
+
+JSON全称“JavaScript Object Notation” -----JavaScript 对象表示法
+
+**可以使用`JSON.parse(JSON.stringify(obj))`来进行一个对象的深拷贝**
+
+```javascript
+    var p = { name: 'LinDaiDai' }
+    var copy = JSON.parse(JSON.stringify(p));
+    var copy2 = Object.assign({}, p);
+    var copy3 = p;
+    console.log(copy === p); //false
+    console.log(copy2 === p);//false
+    console.log(copy3 === p);//true
+```
+
+
+
+##### 1.toString()
+
+> 返回一个表示调用这个方法的对象值得字符串
+
+```javascript
+var p = { name: 'LinDaiDai' }
+console.log(p.toString()); //"[object Object]"
+```
+
+##### 2.toLocaleString()
+
+> 返回一个表示这个对象的本地化字符串
+
+```
+    console.log(new Date().toString()) //Wed Aug 15 2018 20:15:41 GMT+0800 (中国标准时间)
+    console.log(new Date().toLocaleString()) //2018/8/15 下午8:15:41
+```
+
+##### 3.toJSON()
+
+在`Object.prototype`中实际上时没有定义`toJSON()`方法，
+
+但对于需要执行序列化的对象来说，`JSON.stringify()`方法会调用`toJSON()`方法
+
+##### 4.valueOf()
+
+`valueOf()` 方法返回`Array `对象的原始值。
+
+该原始值由 `Array `对象派生的所有对象继承。
+
+`valueOf() `方法通常由` JavaScript `在后台自动调用，并不显式地出现在代码中。
+
+**注意：** `valueOf() `方法不会改变原数组。
+
+```
+<p id="demo">单击按钮返回数组。</p>
+<button onclick="myFunction()">点我</button>
+<script>
+function myFunction(){
+	var fruits = ["Banana", "Orange", "Apple", "Mango"];
+	var x=document.getElementById("demo");
+	x.innerHTML=fruits.valueOf();
+}
+</script>
+```
+
+页面中`p`标签内显示：
+
+```
+Banana,Orange,Apple,Mango
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
