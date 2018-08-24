@@ -376,6 +376,69 @@ let getList = async () => {
 }
 ```
 
+**我们可以使用Promise、Iterator和Generator来构造一个async**
+
+首先编写一个`run`函数
+
+```
+function run(generator) {
+  return new Promise((resolve, reject) => {
+    const it = generator()
+    step(() => it.next())
+    function step(nextFn) {
+      const result = runNext(nextFn)
+      if (result.done) {
+        resolve(result.value)
+        return
+      }
+      Promise
+        .resolve(result.value)
+        .then(
+          value => step(() => it.next(value)), 
+          err => step(() => it.throw(err))
+        )
+    }
+    function runNext(nextFn) {
+      try {
+        return nextFn()
+      } catch (err) {
+        reject(err)
+      }
+    }
+  })
+}
+
+```
+
+然后分别编写一个通过生成器运行程序的异步代码 和 一个`async`函数
+
+```
+        function generatorGetList() {
+            return run(function *() {
+                const count = yield new Promise(resolve => {
+                    setTimeout(resolve, 2000, '200');
+                })
+                const list = yield new Promise(resolve => {
+                    setTimeout(resolve, 1000, [1, 2]);
+                })
+                return [count, list]
+            })
+        }
+        async function asyncGetList() {
+            const count = await new Promise(resolve => {
+                setTimeout(resolve, 2000, '200');
+            })
+            const list = await new Promise(resolve => {
+                setTimeout(resolve, 1000, [1, 2]);
+            })
+            return [count, list]
+        }
+        generatorGetList().then(res => { console.log(res) });//3秒后输出['200', [1, 2]]
+        asyncGetList().then(res => { console.log(res) });//3秒后输出['200', [1, 2]]
+```
+
+上面俩个函数的执行结果都是相同的。
+
 
 
 ### 2.Object.entries()

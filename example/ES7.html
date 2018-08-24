@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES7</title>
+</head>
+
+<body>
+    <button onclick="getInfo()">点击</button>
+    <script>
+        function getInfo() {
+            console.log('点击')
+            num();
+        }
+        //includes()
+        // var arr = [1, [2, 3], 4];
+        // var arr1 = [2, 3];
+        // var a = 1;
+        // var flag = arr.includes([2, 3]);
+        // var flag1 = arr.indexOf([2, 3]);
+        // var flag2 = arr.indexOf(arr1);
+        // var flag3 = arr.includes(a);
+        // var flag4 = arr.indexOf(a);
+        // console.log(flag);
+        // console.log(flag1);
+        // console.log(flag2);
+        // console.log(flag3);
+        // console.log(flag4);
+
+        //求幂运算符**
+        // var b = 3;
+        // b **= 2;
+        // console.log(b);
+
+        //async await
+        //返回Promise
+        // let timer = async function timer() {
+        //     return new Promise((reslove, reject) => {
+        //         setTimeout(() => {
+        //             reslove('a');
+        //         }, 1000);
+        //     })
+        // }
+        // timer().then(result => {
+        //     console.log(result);
+        // }).catch(err => {
+        //     console.log(err.message);
+        // })
+
+        // //返回同步的值
+        // let sayHello = async function sayHello() {
+        //     let hi = 'hello world'//等同于return Promise.resolve(hi);
+        //     return hi
+        // }
+        // sayHello().then(res => {
+        //     console.log(res)
+        // }).catch(err => {
+        //     console.log(err.message);
+        // })
+
+        //promise抛出异常
+        // let promise = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         // reject('promise抛出异常'); //1.
+        //         reject(new Error('promise抛出异常')); //2.
+        //     }, 1000);
+        //     // throw new Error('promise抛出异常') //3.
+        // })
+
+        // promise.then(res => {
+        //     console.log(res);
+        // })
+        // .catch(err => {
+        //     console.log(err.message);
+        // })
+
+        //async抛出异常
+        // let sayHi = async sayHi => {
+        //         throw new Error('async抛出异常');
+        // }
+        // sayHi().then(res => {
+        //     console.log(res);
+        // })
+        // .catch(err => {
+        //     console.log(err.message);
+        // })
+
+        // let count = () => {
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             resolve(100)
+        //         }, 1000);
+        //     })
+        // }
+        // let list = () => {
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             resolve([1, 2, 3])
+        //         }, 1000);
+        //     })
+        // }
+
+        // let getList = async () => {
+        //     let c = await count()
+        //     console.log('async')
+        //     let l = await list()
+        //     return { count: c, list: l }
+        // }
+        // console.time('start');
+        // getList().then(res => {
+        //     console.log(res)
+        // })
+        // .catch(err => {
+        //     console.timeEnd('start')
+        //     console.log(err)
+        // })
+
+
+        // var nn = 0;
+        // let num = () => {
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             nn++;
+        //             console.log(nn)
+        //             resolve(100)
+        //         }, 1000);
+        //     })
+        // }
+        // let sum = () => {
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             let arr = [1, 2, 3]
+        //             resolve(arr)
+        //         }, 1000);
+        //     })
+        // }
+        // let getSum = async () => {
+        //     await num();
+        //     let s =  await sum();
+        //     return s
+        // }
+        // getSum().then(res => {
+        //     console.log(res)
+        // })
+        // .catch(err => {
+        //     console.log(err)
+        // })
+
+        //Generator
+        // function* getList() {
+        //     const c = yield count()
+        //     const l = yield list()
+        //     return s = 'end'
+        // }
+        // var gl = getList()
+        // console.log(gl.next())
+        // console.log(gl.next())
+        // console.log(gl.next())
+
+        //entries()创建Map
+        // var obj = { foo: 'bar', baz: 42 };
+        // var map1 = new Map([['foo', 'bar'], ['baz', 42]]);
+        // var map2 = new Map(Object.entries(obj));
+
+        // map1.forEach((key, value) => {
+        //     console.log(value);
+        //     console.log(key);
+        // })
+        // console.log(map1);
+        // console.log(map2);
+
+        //自定义entries()
+        // var obj = { foo: 'bar', baz: 42 };
+        // function myEntries(obj) {
+        //     var arr = []
+        //     for (var key of Object.keys(obj)) {
+        //         arr.push([key, obj[key]])
+        //     }
+        //     return arr
+        // }
+        // console.log(myEntries(obj))
+
+        // function* genEntryies(obj) {
+        //     for (let key of Object.keys(obj)) {
+        //         yield [key, obj[key]]
+        //     }
+        // }
+        // var entryArr = genEntryies(obj);
+        // console.log(entryArr.next().value)
+        // console.log(entryArr.next().value)
+
+        //Object.values()
+        // var obj = { foo: 'bar', baz: 42 };
+        // console.log(Object.keys(obj)) //["foo", "baz"]
+        // console.log(Object.values(obj)) //["bar", 42]
+        // console.log(Object.entries(obj)) //[["foo", "bar"], ["baz", 42]]
+
+        //Object.getOwnPropertyDescriptors()
+        // var obj = {
+        //     id: 1,
+        //     name: '霖呆呆',
+        //     get gender() {
+        //         console.log('gender')
+        //     },
+        //     set grad(d) {
+        //         console.log(d)
+        //     }
+        // }
+        // function myDescriptors(obj) {
+        //     let descriptors = {}
+        //     // for (let key in obj) {
+        //     //     descriptors[key] = Object.getOwnPropertyDescriptor(obj, key)
+        //     // }
+        //     for (let key of Object.keys(obj)) {
+        //         descriptors[key] = Object.getOwnPropertyDescriptor(obj, key)
+        //     }
+        //     return descriptors
+        // }
+        // console.log(myDescriptors(obj))
+        // console.log(Object.getOwnPropertyDescriptor(obj, 'id'))
+        // var prot = Object.getOwnPropertyDescriptors(obj, 'id')
+        // console.log(prot)    
+
+        //函数参数末尾逗号
+        // let foo = function (
+        //         a,
+        //         b,
+        //         c,
+        //     ) {
+        //         console.log('a:', a)
+        //         console.log('b:', b)
+        //         console.log('c:', c)
+        //     }
+        //     foo(1, 3, 4, )
+
+        //     //输出结果为：
+        //     a: 1
+        //     b: 3
+        //     c: 4
+
+        //模拟适配器Decorator
+        // function doSometing(name) {
+        //     console.log('Hello' + name)
+        // }
+        // function myDecorator(fn) {
+        //     return function() {
+        //         console.log('start')
+        //         const res = fn.apply(this, arguments)
+        //         console.log('end')
+        //         return res
+        //     }
+        // }
+        // const wrapped = myDecorator(doSometing)
+        // doSometing('lindaidai')
+        // wrapped('lindaidai')
+
+        //Decorator
+        // @addSkill
+        // class Person { }
+
+        // function addSkill(target) {
+        //     target.say = "hello world"; //直接添加到类中
+        //     target.prototype.eat = "apple"; //添加到类的原型对象中
+        // }
+        // var personOne = new Person()
+
+        // console.log(Person['say']) // 'hello world'
+        // console.log(personOne['eat']) // 'apple'
+
+        // async function process(array) {
+        //         array.forEach(async i => {
+        //             await doSomething(i);
+        //         });
+        //     }
+        // function doSomething(i) {
+        //     setTimeout(() => {
+        //         i++;
+        //         console.log(i)
+        //     }, 1000)
+        // }
+        // process([1, 2, 3]);
+
+        //Generator与async的关系 (async为语法糖)
+        function run(generator) {
+            return new Promise((resolve, reject) => {
+                const it = generator()
+                step(() => it.next())
+                function step(nextFn) {
+                    const result = runNext(nextFn)
+                    if (result.done) {
+                        resolve(result.value)
+                        return
+                    }
+                    Promise
+                        .resolve(result.value)
+                        .then(
+                            value => step(() => it.next(value)),
+                            err => step(() => it.throw(err))
+                        )
+                }
+                function runNext(nextFn) {
+                    try {
+                        return nextFn()
+                    } catch (err) {
+                        reject(err)
+                    }
+                }
+            })
+        }
+        function generatorGetList() {
+            return run(function *() {
+                const count = yield new Promise(resolve => {
+                    setTimeout(resolve, 2000, '200');
+                })
+                const list = yield new Promise(resolve => {
+                    setTimeout(resolve, 1000, [1, 2]);
+                })
+                return [count, list]
+            })
+        }
+        async function asyncGetList() {
+            const count = await new Promise(resolve => {
+                setTimeout(resolve, 2000, '200');
+            })
+            const list = await new Promise(resolve => {
+                setTimeout(resolve, 1000, [1, 2]);
+            })
+            return [count, list]
+        }
+        generatorGetList().then(res => { console.log(res) });
+        asyncGetList().then(res => { console.log(res) });
+    </script>
+</body>
+
+</html>
