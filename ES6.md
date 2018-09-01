@@ -1139,7 +1139,7 @@ console.log(it.next());			//{value: undefined, done: true}
 
 
 
-所以我们可以在生成器函数传入一个要迭代的数组,然后在函数内做一个for循环来将所有的value值都返回出来;
+所以我们就可以在生成器函数传入一个要迭代的数组,然后在函数内做一个for循环来将所有的value值都返回出来;
 
 ```javascript
 //例3			
