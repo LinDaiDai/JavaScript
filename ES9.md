@@ -46,7 +46,7 @@ async function process(array) {
 
 在ES6中，一个`Promise`链要么成功进入最后一个`then()`要么失败触发`catch()`。而实际中，我们可能需要无论`Promise`无论成功还是失败，都运行相同的代码。例如清除，删除回话，关闭数据库连接等操作。
 
-ES9中，允许使用`finally()`来指定最终的逻辑。
+ES9中，允许使用`finally()`来指定一个Promise链中的最终的逻辑。
 
 如下：
 
