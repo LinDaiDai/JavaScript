@@ -982,6 +982,80 @@ forEach(function(value,key,ownerSet){
 			=>{}
 ```
 
+#### 9.5 利用set获取交集并集
+
+**set常用的做法除了数组去重，应该就是用于获取俩个数组的交集并集还有差集了**
+
+交集：俩数组中相同的元素集合
+
+并集：俩数组中全部的元素集合
+
+差集：俩数组中不相同的元素集合
+
+```
+var arr1 = [1, 2];
+var arr2 = [1, 3];
+交集:[1]
+并集:[1, 2, 3]
+arr1对于arr2的差集(arr1中有,arr2中没有): [2]
+arr2对于arr1的差集同理: [3]
+```
+
+**使用**
+
+```
+	arr1 = [1, 2];
+    arr2 = ['1', '3']
+    var set1 = new Set(arr1);
+    var set2 = new Set(arr2.map(ele => { return Number(ele) }));
+    console.log(set1);
+    console.log(set2);
+    // 交集
+    let intersectionSet = new Set([...set1].filter(x => set2.has(x)));
+    console.log(intersectionSet)
+    // ab差集
+    let differenceABSet1 = new Set([...set1].filter(x => !set2.has(x)));
+    console.log([...differenceABSet1])
+
+    // ab差集
+    let differenceABSet2 = new Set([...set2].filter(x => !set1.has(x)));
+    console.log([...differenceABSet2])
+```
+
+
+
+```
+/**
+   * 获取2个数组的交集/并集/差集
+   * @param arr1 数组1
+   * @param arr2 数组2
+   * @returns nuionArr: 2个数组的并集 
+   * intersectionArr: 2个数组的交集
+   * differArr1: 数组1中有,数组2中没有的数
+   * differArr2: 数组2中有,数组1中没有的数
+   */
+  checkDifferentArr(arr1, arr2) {
+    arr1 = arr1 || [];
+    arr2 = arr2 || [];
+    let set1 = new Set(arr1.map(ele => { return Number(ele) }))
+    let set2 = new Set(arr2.map(ele => { return Number(ele) }))
+    // 并集
+    let unionSet = new Set([...set1, ...set2]);
+    // 交集
+    let intersectionSet = new Set([...set1].filter(x => set2.has(x)));
+    // set1中有,set2中没有
+    let differenceSet1 = new Set([...set1].filter(x => !set2.has(x)));
+    // set2中有,set1中没有
+    let differenceSet2 = new Set([...set2].filter(x => !set1.has(x)));
+    return {
+      'nuionArr': [...unionSet],
+      'intersectionArr': [...intersectionSet],
+      'differArr1': [...differenceSet1],
+      'differArr2': [...differenceSet2]
+    }
+  }
+```
+
 
 
 ### 第十章: map数据结构
