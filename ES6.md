@@ -21,7 +21,7 @@
 let声明语法和var 一样,不过let声明的变量只能在当前的代码块中,这是它也var 的最大区别.
 
 ```javascript
-		let a = 10;
+	let a = 10;
         if(a>0){
             console.log(b);		//报错
             let b = 5;		
